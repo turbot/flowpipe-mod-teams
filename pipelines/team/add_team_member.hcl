@@ -1,12 +1,12 @@
 // usage: flowpipe pipeline run add_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg user_id="USER_ID" --pipeline-arg roles="['owner']"
 pipeline "add_team_member" {
-  title       = "Add a team member"
+  title       = "Add Team Member"
   description = "Add a member to an existing team."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access access_token to use for the request."
+    description = "The access_token to use for the request."
   }
 
   param "team_id" {
@@ -26,7 +26,7 @@ pipeline "add_team_member" {
   }
 
   step "http" "add_team_member" {
-    title  = "Adds a member to an exisiting team"
+    title  = "Add Team Member"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members"
 

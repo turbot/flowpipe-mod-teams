@@ -6,21 +6,21 @@ pipeline "list_tag_members" {
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access access_token to use for the request."
+    description = "The access_token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The ID of the team"
+    description = "The ID of the team."
   }
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The ID of the teamwork tag"
+    description = "The ID of the teamwork tag."
   }
 
   step "http" "list_tag_members" {
-    title  = "Retrieves a list of members associated with a specific tag"
+    title  = "List Tag Members"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members"
 
@@ -31,6 +31,6 @@ pipeline "list_tag_members" {
 
   output "tag_members" {
     value       = jsondecode(step.http.list_tag_members.response_body).value
-    description = "The members associated with the tag"
+    description = "The members associated with the tag."
   }
 }

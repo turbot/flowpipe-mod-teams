@@ -6,11 +6,11 @@ pipeline "list_teams" {
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access access_token to use for the request."
+    description = "The access_token to use for the request."
   }
 
   step "http" "list_teams" {
-    title  = "Retrieve a list of teams"
+    title  = "List Teams"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/me/joinedTeams"
 

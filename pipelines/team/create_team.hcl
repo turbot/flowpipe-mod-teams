@@ -1,12 +1,12 @@
 // usage: flowpipe pipeline run create_team --pipeline-arg team_name="TEAM_NAME"
 pipeline "create_team" {
-  title       = "Create a new team"
+  title       = "Create a New Team"
   description = "Create a new team."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access access_token to use for the request."
+    description = "The access_token to use for the request."
   }
 
   param "team_name" {
@@ -27,7 +27,7 @@ pipeline "create_team" {
   }
 
   step "http" "create_team" {
-    title  = "Create a new team"
+    title  = "Create a New Team"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/teams"
 
@@ -45,7 +45,7 @@ pipeline "create_team" {
   }
 
   output "team" {
-    value       = jsondecode(step.http.list_teams.response_body).value
+    value       = step.http.create_team.response_body
     description = "The newly created team."
   }
 }

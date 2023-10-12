@@ -1,12 +1,12 @@
 // usage: flowpipe pipeline run send_message_chat --pipeline-arg chat_id="CHAT_ID" --pipeline-arg message="MESSAGE"
 pipeline "send_message_chat" {
-  title       = "Send message to chat"
+  title       = "Send Message to Chat"
   description = "Send a message to a chat."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access access_token to use for the request."
+    description = "The access_token to use for the request."
   }
 
   param "chat_id" {
@@ -20,7 +20,7 @@ pipeline "send_message_chat" {
   }
 
   step "http" "send_message_chat" {
-    title  = "Sends message to a chat"
+    title  = "Sends Message"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/chats/${param.chat_id}/messages"
 
@@ -37,7 +37,7 @@ pipeline "send_message_chat" {
   }
 
   output "message" {
-    value       = jsondecode(step.http.send_message_chat.response_body)
+    value       = step.http.send_message_chat.response_body
     description = "The sent message."
   }
 }

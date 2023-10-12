@@ -7,28 +7,28 @@ pipeline "update_team" {
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access access_token to use for the request."
+    description = "The access_token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The ID of the team"
+    description = "The ID of the team."
   }
 
   param "display_name" {
     type        = string
     default     = ""
-    description = "The display name of the team"
+    description = "The display name of the team."
   }
 
   param "description" {
     type        = string
     default     = ""
-    description = "The description of the team"
+    description = "The description of the team."
   }
 
   step "http" "update_team" {
-    title  = "Updates the properties of an existing team"
+    title  = "Update Team"
     method = "patch"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}"
 

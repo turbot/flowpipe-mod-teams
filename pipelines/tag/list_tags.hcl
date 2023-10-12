@@ -1,21 +1,21 @@
 // usage : flowpipe pipeline run list_tags --pipeline-arg team_id="TEAM_ID"
 pipeline "list_tags" {
-  title       = "List all tags"
+  title       = "List all Tags"
   description = "Retrieve a list of tags associated with a specific team."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access access_token to use for the request."
+    description = "The access_token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The ID of the team"
+    description = "The ID of the team."
   }
 
   step "http" "list_tags" {
-    title  = "Retrieves a list of tags associated with a specific team"
+    title  = "List Tags"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/"
 
