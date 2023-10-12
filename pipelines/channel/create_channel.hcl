@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run create_channel --pipeline-arg team_id="TEAM_ID" --pipeline-arg channel_name="test" --pipeline-arg channel_description="test"
 pipeline "create_channel" {
+  title       = "Create a new channel"
   description = "Create a new channel within an existing team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -31,7 +32,7 @@ pipeline "create_channel" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
@@ -40,18 +41,8 @@ pipeline "create_channel" {
     })
   }
 
-
-  output "id" {
-    value       = jsondecode(step.http.create_channel.response_body).id
-    description = "The ID of the created channel"
-  }
-  output "response_body" {
-    value = step.http.create_channel.response_body
-  }
-  output "response_headers" {
-    value = step.http.create_channel.response_headers
-  }
-  output "status_code" {
-    value = step.http.create_channel.status_code
+  output "channel" {
+    value       = jsondecode(step.http.create_channel.response_body)
+    description = "The created channel."
   }
 }

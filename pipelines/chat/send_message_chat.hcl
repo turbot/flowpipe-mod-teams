@@ -1,16 +1,17 @@
 // usage: flowpipe pipeline run send_message_chat --pipeline-arg chat_id="CHAT_ID" --pipeline-arg message="MESSAGE"
 pipeline "send_message_chat" {
+  title       = "Send message to chat"
   description = "Send a message to a chat."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "chat_id" {
     type        = string
-    description = "The chat id to send the message to."
+    description = "The chat ID to send the message to."
   }
 
   param "message" {
@@ -25,7 +26,7 @@ pipeline "send_message_chat" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
@@ -35,17 +36,8 @@ pipeline "send_message_chat" {
     })
   }
 
-  output "id" {
-    value       = jsondecode(step.http.send_message_chat.response_body).id
-    description = "The id of the message that was sent."
-  }
-  output "response_body" {
-    value = step.http.send_message_chat.response_body
-  }
-  output "response_headers" {
-    value = step.http.send_message_chat.response_headers
-  }
-  output "status_code" {
-    value = step.http.send_message_chat.status_code
+  output "message" {
+    value       = jsondecode(step.http.send_message_chat.response_body)
+    description = "The sent message."
   }
 }

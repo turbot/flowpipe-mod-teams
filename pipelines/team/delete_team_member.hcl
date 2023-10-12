@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run delete_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg team_membership_id="TEAM_MEMBERSHIP_ID"
 pipeline "delete_team_member" {
+  title       = "Delete a team member"
   description = "Delete a member from an existing team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -24,17 +25,7 @@ pipeline "delete_team_member" {
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members/${param.team_membership_id}"
 
     request_headers = {
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
-  }
-
-  output "response_body" {
-    value = step.http.delete_team_member.response_body
-  }
-  output "response_headers" {
-    value = step.http.delete_team_member.response_headers
-  }
-  output "status_code" {
-    value = step.http.delete_team_member.status_code
   }
 }

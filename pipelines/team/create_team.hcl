@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run create_team --pipeline-arg team_name="TEAM_NAME"
 pipeline "create_team" {
+  title       = "Create a new team"
   description = "Create a new team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_name" {
@@ -32,7 +33,7 @@ pipeline "create_team" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
@@ -43,17 +44,8 @@ pipeline "create_team" {
     })
   }
 
-  output "id" {
-    value       = jsondecode(step.http.list_teams.response_body).value.id
-    description = "The ID of the newly created team."
-  }
-  output "response_body" {
-    value = step.http.create_team.response_body
-  }
-  output "response_headers" {
-    value = step.http.create_team.response_headers
-  }
-  output "status_code" {
-    value = step.http.create_team.status_code
+  output "team" {
+    value       = jsondecode(step.http.list_teams.response_body).value
+    description = "The newly created team."
   }
 }

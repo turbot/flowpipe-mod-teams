@@ -1,11 +1,12 @@
 // usage : flowpipe pipeline run list_tags --pipeline-arg team_id="TEAM_ID"
 pipeline "list_tags" {
+  title       = "List all tags"
   description = "Retrieve a list of tags associated with a specific team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -19,18 +20,12 @@ pipeline "list_tags" {
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/"
 
     request_headers = {
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
   }
 
   output "tags" {
     value       = jsondecode(step.http.list_tags.response_body).value
-    description = "The list of tags associated with the team"
-  }
-  output "response_headers" {
-    value = step.http.list_tags.response_headers
-  }
-  output "status_code" {
-    value = step.http.list_tags.status_code
+    description = "The list of tags associated with the team."
   }
 }

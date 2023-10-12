@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run create_tag --pipeline-arg team_id="TEAM_ID" --pipeline-arg tag_name="TAG_NAME" --pipeline-arg user_id="USER_ID"
 pipeline "create_tag" {
+  title       = "Create a tag"
   description = "Create a new tag in a team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -30,7 +31,7 @@ pipeline "create_tag" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
@@ -41,20 +42,8 @@ pipeline "create_tag" {
     })
   }
 
-  output "id" {
-    value       = jsondecode(step.http.create_tag.response_body).id
-    description = "The ID of the tag"
-  }
-  output "member_count" {
-    value = jsondecode(step.http.create_tag.response_body).memberCount
-  }
-  output "response_body" {
-    value = step.http.create_tag.response_body
-  }
-  output "response_headers" {
-    value = step.http.create_tag.response_headers
-  }
-  output "status_code" {
-    value = step.http.create_tag.status_code
+  output "tag" {
+    value       = jsondecode(step.http.create_tag.response_body)
+    description = "The created tag."
   }
 }

@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run create_tag --pipeline-arg team_id="TEAM_ID" --pipeline-arg teamwork_tag_id="TEAMWORK_TAG_ID"
 pipeline "delete_tag" {
+  title       = "Delete a tag"
   description = "Delete a tag in a team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -24,17 +25,7 @@ pipeline "delete_tag" {
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 
     request_headers = {
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
-  }
-
-  output "response_body" {
-    value = step.http.delete_tag.response_body
-  }
-  output "response_headers" {
-    value = step.http.delete_tag.response_headers
-  }
-  output "status_code" {
-    value = step.http.delete_tag.status_code
   }
 }

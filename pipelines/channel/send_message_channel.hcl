@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run send_message_channel --pipeline-arg team_id="TEAM_ID" --pipeline-arg channel_id="CHANNEL_ID" --pipeline-arg message="MESSAGE"
 pipeline "send_message_channel" {
+  title       = "Send a message to a channel"
   description = "Send a message to a channel."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -30,7 +31,7 @@ pipeline "send_message_channel" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
@@ -40,17 +41,8 @@ pipeline "send_message_channel" {
     })
   }
 
-  output "id" {
-    value       = jsondecode(step.http.send_message_channel.response_body).id
-    description = "The ID of the message"
-  }
-  output "response_body" {
-    value = step.http.send_message_channel.response_body
-  }
-  output "response_headers" {
-    value = step.http.send_message_channel.response_headers
-  }
-  output "status_code" {
-    value = step.http.send_message_channel.status_code
+  output "message" {
+    value       = jsondecode(step.http.send_message_channel.response_body)
+    description = "The sent message."
   }
 }

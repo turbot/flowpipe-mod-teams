@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline add_tag_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg teamwork_tag_id="TAG_ID" --pipeline-arg user_id="USER_ID"
 pipeline "add_tag_member" {
+  title       = "Add Tag Member"
   description = "Add a member to a tag in a team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -30,7 +31,7 @@ pipeline "add_tag_member" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
@@ -38,17 +39,8 @@ pipeline "add_tag_member" {
     })
   }
 
-  output "id" {
-    value       = jsondecode(step.http.add_tag_member.response_body).id
-    description = "The ID of the tag member"
-  }
-  output "response_body" {
-    value = step.http.add_tag_member.response_body
-  }
-  output "response_headers" {
-    value = step.http.add_tag_member.response_headers
-  }
-  output "status_code" {
-    value = step.http.add_tag_member.status_code
+  output "tag_member" {
+    value       = jsondecode(step.http.add_tag_member.response_body)
+    description = "The added tag member."
   }
 }

@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run add_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg user_id="USER_ID" --pipeline-arg roles="['owner']"
 pipeline "add_team_member" {
+  title       = "Add a team member"
   description = "Add a member to an existing team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -31,22 +32,12 @@ pipeline "add_team_member" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
       "user@odata.bind" : "https://graph.microsoft.com/v1.0/users('${param.user_id}')"
       roles = param.roles,
     })
-  }
-
-  output "response_body" {
-    value = step.http.add_team_member.response_body
-  }
-  output "response_headers" {
-    value = step.http.add_team_member.response_headers
-  }
-  output "status_code" {
-    value = step.http.add_team_member.status_code
   }
 }

@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run list_teams
 pipeline "list_teams" {
+  title       = "List Teams"
   description = "Retrieve a list of all teams."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   step "http" "list_teams" {
@@ -14,18 +15,12 @@ pipeline "list_teams" {
     url    = "https://graph.microsoft.com/v1.0/me/joinedTeams"
 
     request_headers = {
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
   }
 
   output "teams" {
     value       = jsondecode(step.http.list_teams.response_body).value
     description = "The list of teams."
-  }
-  output "response_headers" {
-    value = step.http.list_teams.response_headers
-  }
-  output "status_code" {
-    value = step.http.list_teams.status_code
   }
 }

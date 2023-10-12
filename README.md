@@ -36,7 +36,7 @@ flowpipe pipeline run list_teams
 
 ### Credentials
 
-This mod uses the credentials configured in `flowpipe.pvars` or passed through `--pipeline-args token`.
+This mod uses the credentials configured in `flowpipe.pvars` or passed through `--pipeline-args access_token`.
 
 ### Configuration
 
@@ -46,7 +46,7 @@ Pipelines have [input variables](https://flowpipe.io/docs/using-flowpipe/mod-var
 - Pass in a value on the command line:
 
   ```shell
-  flowpipe pipeline run list_teams --pipeline-arg token="eya32asW3f323saf32..."
+  flowpipe pipeline run list_teams --pipeline-arg access_token="eya32asW3f323saf32..."
   ```
 
 These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://flowpipe.io/docs/using-flowpipe/mod-variables#passing-input-variables).

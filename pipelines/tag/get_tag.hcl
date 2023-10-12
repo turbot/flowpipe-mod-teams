@@ -1,11 +1,12 @@
 // usage: flowpipe pipeline run get_tag  --pipeline-arg team_id="TEAM_ID" --pipeline-arg teamwork_tag_id="TEAMWORK_TAG_ID"
 pipeline "get_tag" {
+  title       = "Get a tag"
   description = "Retrieve a specific tag associated with a specific team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -24,29 +25,12 @@ pipeline "get_tag" {
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 
     request_headers = {
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
   }
 
-  output "id" {
-    value       = jsondecode(step.http.get_tag.response_body).id
-    description = "The ID of the tag"
-  }
-  output "display_name" {
-    value       = jsondecode(step.http.get_tag.response_body).displayName
-    description = "The display name of the tag"
-  }
-  output "member_count" {
-    value       = jsondecode(step.http.get_tag.response_body).memberCount
-    description = "The number of members in the tag"
-  }
-  output "response_body" {
-    value = step.http.get_tag.response_body
-  }
-  output "response_headers" {
-    value = step.http.get_tag.response_headers
-  }
-  output "status_code" {
-    value = step.http.get_tag.status_code
+  output "tag" {
+    value       = jsondecode(step.http.get_tag.response_body)
+    description = "The fetched tag."
   }
 }

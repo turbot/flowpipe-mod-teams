@@ -1,12 +1,13 @@
 
 // usage: flowpipe pipeline run update_team --pipeline-arg team_id="TEAM_ID" --pipeline-arg team_membership_id="TEAM_MEMBERSHIP_ID" --pipeline-arg display_name="DISPLAY_NAME" --pipeline-arg description="DESCRIPTION"
 pipeline "update_team" {
+  title       = "Update Team"
   description = "Update the properties of an existing team."
 
-  param "token" {
+  param "access_token" {
     type        = string
-    default     = var.token
-    description = "The access token to use for the request."
+    default     = var.access_token
+    description = "The access access_token to use for the request."
   }
 
   param "team_id" {
@@ -33,22 +34,12 @@ pipeline "update_team" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.token}"
+      Authorization = "Bearer ${param.access_token}"
     }
 
     request_body = jsonencode({
       displayName = param.display_name,
       description = param.description
     })
-  }
-
-  output "response_body" {
-    value = step.http.update_team.response_body
-  }
-  output "response_headers" {
-    value = step.http.update_team.response_headers
-  }
-  output "status_code" {
-    value = step.http.update_team.status_code
   }
 }
