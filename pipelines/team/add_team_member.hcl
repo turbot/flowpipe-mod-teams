@@ -1,9 +1,11 @@
+// usage: flowpipe pipeline run add_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg user_id="USER_ID" --pipeline-arg roles="['owner']"
 pipeline "add_team_member" {
   description = "Add a member to an existing team."
 
   param "token" {
-    type    = string
-    default = var.token
+    type        = string
+    default     = var.token
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
@@ -17,8 +19,9 @@ pipeline "add_team_member" {
   }
 
   param "roles" {
-    type    = list(string)
-    default = ["owner"] // or "owner" or other applicable roles
+    type        = list(string)
+    default     = ["member"] // or "owner" or other applicable roles
+    description = "The roles to assign to the user."
   }
 
   step "http" "add_team_member" {

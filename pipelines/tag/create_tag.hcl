@@ -1,22 +1,26 @@
+// usage: flowpipe pipeline run create_tag --pipeline-arg team_id="TEAM_ID" --pipeline-arg tag_name="TAG_NAME" --pipeline-arg user_id="USER_ID"
 pipeline "create_tag" {
   description = "Create a new tag in a team."
 
   param "token" {
-    type    = string
-    default = var.token
+    type        = string
+    default     = var.token
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
-    type = string
+    type        = string
+    description = "The ID of the team"
   }
 
   param "tag_name" {
-    type = string
+    type        = string
+    description = "The name of the tag"
   }
 
-  ## Members of the tag: Required
   param "user_id" {
-    type = string
+    type        = string
+    description = "The ID of the user to add to the tag"
   }
 
   step "http" "create_tag" {
@@ -38,7 +42,8 @@ pipeline "create_tag" {
   }
 
   output "id" {
-    value = jsondecode(step.http.create_tag.response_body).id
+    value       = jsondecode(step.http.create_tag.response_body).id
+    description = "The ID of the tag"
   }
   output "member_count" {
     value = jsondecode(step.http.create_tag.response_body).memberCount

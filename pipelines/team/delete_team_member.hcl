@@ -1,19 +1,21 @@
+// usage: flowpipe pipeline run delete_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg team_membership_id="TEAM_MEMBERSHIP_ID"
 pipeline "delete_team_member" {
   description = "Delete a member from an existing team."
 
   param "token" {
-    type    = string
-    default = var.token
+    type        = string
+    default     = var.token
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
-    type    = string
-    default = "fa3dfaa9-6658-43fa-be18-298b8df03d2f"
+    type        = string
+    description = "The ID of the team"
   }
 
   param "team_membership_id" {
-    type    = string
-    default = "MCMjMSMjZmRkYjNkMDQtYWQ2MS00YjBjLWFmNWEtMjkzMmEyNzdkMmJjIyNmYTNkZmFhOS02NjU4LTQzZmEtYmUxOC0yOThiOGRmMDNkMmYjIzk0NGE4ZTE0LTdhNmYtNDhjNi04ODA1LTZlOTM2MTJmNmMyYg=="
+    type        = string
+    description = "The ID of the team membership"
   }
 
   step "http" "delete_team_member" {

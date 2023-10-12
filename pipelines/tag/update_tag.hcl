@@ -1,21 +1,26 @@
+// usage: flowpipe pipeline run update_tag  --pipeline-arg team_id="TEAM_ID" --pipeline-arg teamwork_tag_id="TEAMWORK_TAG_ID" --pipeline-arg new_tag_name="NEW_TAG_NAME"
 pipeline "update_tag" {
   description = "Update a tag in a team."
 
   param "token" {
-    type    = string
-    default = var.token
+    type        = string
+    default     = var.token
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
-    type = string
+    type        = string
+    description = "The ID of the team"
   }
 
   param "teamwork_tag_id" {
-    type = string
+    type        = string
+    description = "The ID of the teamwork tag"
   }
 
   param "new_tag_name" {
-    type = string
+    type        = string
+    description = "The new name of the tag"
   }
 
   step "http" "update_tag" {
@@ -34,13 +39,16 @@ pipeline "update_tag" {
   }
 
   output "id" {
-    value = jsondecode(step.http.update_tag.response_body).id
+    value       = jsondecode(step.http.update_tag.response_body).id
+    description = "The ID of the tag"
   }
   output "display_name" {
-    value = jsondecode(step.http.update_tag.response_body).displayName
+    value       = jsondecode(step.http.update_tag.response_body).displayName
+    description = "The display name of the tag"
   }
   output "member_count" {
-    value = jsondecode(step.http.update_tag.response_body).memberCount
+    value       = jsondecode(step.http.update_tag.response_body).memberCount
+    description = "The number of members in the tag"
   }
   output "response_body" {
     value = step.http.update_tag.response_body

@@ -1,22 +1,28 @@
+// usage: flowpipe pipeline run create_team --pipeline-arg team_name="TEAM_NAME"
 pipeline "create_team" {
   description = "Create a new team."
 
   param "token" {
-    type    = string
-    default = var.token
+    type        = string
+    default     = var.token
+    description = "The access token to use for the request."
   }
 
   param "team_name" {
-    type = string
+    type        = string
+    description = "The name of the team to create."
   }
 
   param "team_description" {
-    type = string
+    type        = string
+    default     = ""
+    description = "The description of the team to create."
   }
 
   param "privacy_setting" {
-    type    = string
-    default = "private" // or "public"
+    type        = string
+    default     = "private" // or "public"
+    description = "The privacy setting of the team to create."
   }
 
   step "http" "create_team" {
@@ -38,7 +44,8 @@ pipeline "create_team" {
   }
 
   output "id" {
-    value = jsondecode(step.http.list_teams.response_body).value.id
+    value       = jsondecode(step.http.list_teams.response_body).value.id
+    description = "The ID of the newly created team."
   }
   output "response_body" {
     value = step.http.create_team.response_body
