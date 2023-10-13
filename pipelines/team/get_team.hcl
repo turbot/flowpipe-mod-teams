@@ -1,17 +1,17 @@
 // usage: flowpipe pipeline run get_team --pipeline-arg team_id="TEAM_ID"
 pipeline "get_team" {
-  title       = "Get a Team"
-  description = "Fetch the properties of an existing team."
+  title       = "Get Team"
+  description = "Retrieve the properties and relationships of the specified team."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access_token to use for the request."
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The ID of the team."
+    description = "The unique identifier of the team."
   }
 
   step "http" "get_team" {
@@ -26,6 +26,6 @@ pipeline "get_team" {
 
   output "team" {
     value       = step.http.get_team.response_body
-    description = "The fetched team."
+    description = "The team object."
   }
 }

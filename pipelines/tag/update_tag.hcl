@@ -1,31 +1,31 @@
 // usage: flowpipe pipeline run update_tag  --pipeline-arg team_id="TEAM_ID" --pipeline-arg teamwork_tag_id="TEAMWORK_TAG_ID" --pipeline-arg new_tag_name="NEW_TAG_NAME"
 pipeline "update_tag" {
-  title       = "Update a Tag"
-  description = "Update a tag in a team."
+  title       = "Update a Teamwork Tag"
+  description = "Update the properties of a tag object."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access_token to use for the request."
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The ID of the team."
+    description = "The unique identifier of the team."
   }
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The ID of the teamwork tag."
+    description = "The unique identifier for the tag."
   }
 
   param "new_tag_name" {
     type        = string
-    description = "The new name of the tag."
+    description = "The name of the tag as it appears to the user in Microsoft Teams."
   }
 
   step "http" "update_tag" {
-    title  = "Update Tag"
+    title  = "Update a Teamwork Tag"
     method = "patch"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 
@@ -41,6 +41,6 @@ pipeline "update_tag" {
 
   output "tag" {
     value       = step.http.update_tag.response_body
-    description = "The updated tag."
+    description = "The teamwork tag object."
   }
 }

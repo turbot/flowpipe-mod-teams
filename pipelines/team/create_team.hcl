@@ -6,24 +6,24 @@ pipeline "create_team" {
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access_token to use for the request."
+    description = "The access token to use for the request."
   }
 
   param "team_name" {
     type        = string
-    description = "The name of the team to create."
+    description = "The name of the team."
   }
 
   param "team_description" {
     type        = string
-    default     = ""
-    description = "The description of the team to create."
+    optional    = true
+    description = "An optional description for the team."
   }
 
-  param "privacy_setting" {
+  param "visibility" {
     type        = string
-    default     = "private" // or "public"
-    description = "The privacy setting of the team to create."
+    default     = "public" // or "private"
+    description = "The visibility of the group and team. Defaults to public"
   }
 
   step "http" "create_team" {
@@ -40,12 +40,12 @@ pipeline "create_team" {
       displayName         = param.team_name,
       description         = param.team_description,
       isFavoriteByDefault = false,
-      visibility          = param.privacy_setting,
+      visibility          = param.visibility,
     })
   }
 
   output "team" {
     value       = step.http.create_team.response_body
-    description = "The newly created team."
+    description = "The object for the team."
   }
 }

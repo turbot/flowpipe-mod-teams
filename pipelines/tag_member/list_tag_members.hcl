@@ -1,26 +1,26 @@
 // usage : flowpipe pipeline run list_tag_members  --pipeline-arg team_id="TEAM_D" --pipeline-arg teamwork_tag_id="TAG_D" 
 pipeline "list_tag_members" {
-  title       = "List Tag Members"
-  description = "Retrieve a list of members associated with a specific tag."
+  title       = "List Members in a Teamwork Tag"
+  description = "Get a list of the members of a standard tag in a team and their properties."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access_token to use for the request."
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The ID of the team."
+    description = "The unique identifier of the team."
   }
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The ID of the teamwork tag."
+    description = "The unique identifier for the tag."
   }
 
   step "http" "list_tag_members" {
-    title  = "List Tag Members"
+    title  = "List Members in a Teamwork Tag"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members"
 
@@ -31,6 +31,6 @@ pipeline "list_tag_members" {
 
   output "tag_members" {
     value       = jsondecode(step.http.list_tag_members.response_body).value
-    description = "The members associated with the tag."
+    description = "A collection of teamwork tag member object."
   }
 }

@@ -1,32 +1,32 @@
 // usage: flowpipe pipeline run add_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg user_id="USER_ID" --pipeline-arg roles="['owner']"
 pipeline "add_team_member" {
-  title       = "Add Team Member"
-  description = "Add a member to an existing team."
+  title       = "Add Member to Team"
+  description = "Add a new member to a team."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access_token to use for the request."
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
-    type    = string
-    default = "fa3dfaa9-6658-43fa-be18-298b8df03d2f"
+    type        = string
+    description = "The unique identifier for the team."
   }
 
   param "user_id" {
     type    = string
-    default = "944a8e14-7a6f-48c6-8805-6e93612f6c2b"
+    default = "The unique identifier for the user."
   }
 
   param "roles" {
     type        = list(string)
     default     = ["member"] // or "owner" or other applicable roles
-    description = "The roles to assign to the user."
+    description = "The roles for the user."
   }
 
   step "http" "add_team_member" {
-    title  = "Add Team Member"
+    title  = "Add Member to Team"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members"
 

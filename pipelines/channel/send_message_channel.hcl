@@ -1,22 +1,22 @@
 // usage: flowpipe pipeline run send_message_channel --pipeline-arg team_id="TEAM_ID" --pipeline-arg channel_id="CHANNEL_ID" --pipeline-arg message="MESSAGE"
 pipeline "send_message_channel" {
-  title       = "Send Message to Channel"
-  description = "Send a message to a channel."
+  title       = "Send Message in Channel"
+  description = "Send a new chat message in the specified channel."
 
   param "access_token" {
     type        = string
     default     = var.access_token
-    description = "The access_token to use for the request."
+    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The ID of the team."
+    description = "The unique identifier of the team."
   }
 
   param "channel_id" {
     type        = string
-    description = "The ID of the channel."
+    description = "The unique identifier for the channel."
   }
 
   param "message" {
@@ -25,7 +25,7 @@ pipeline "send_message_channel" {
   }
 
   step "http" "send_message_channel" {
-    title  = "Sends Message"
+    title  = "Send Message in Channel"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/channels/${param.channel_id}/messages"
 
@@ -43,6 +43,6 @@ pipeline "send_message_channel" {
 
   output "message" {
     value       = step.http.send_message_channel.response_body
-    description = "The sent message."
+    description = "The new channel message object."
   }
 }
