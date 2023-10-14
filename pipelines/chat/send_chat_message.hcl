@@ -1,6 +1,6 @@
-// usage: flowpipe pipeline run send_message_chat --pipeline-arg chat_id="CHAT_ID" --pipeline-arg message="MESSAGE"
-pipeline "send_message_chat" {
-  title       = "Send Message to Chat"
+// usage: flowpipe pipeline run send_chat_message --pipeline-arg chat_id="CHAT_ID" --pipeline-arg message="MESSAGE"
+pipeline "send_chat_message" {
+  title       = "Send Chat Message"
   description = "Send a new chat message in the specified chat."
 
   param "access_token" {
@@ -19,8 +19,8 @@ pipeline "send_message_chat" {
     description = "The message to send."
   }
 
-  step "http" "send_message_chat" {
-    title  = "Send Message to Chat"
+  step "http" "send_chat_message" {
+    title  = "Send Chat Message"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/chats/${param.chat_id}/messages"
 
@@ -37,7 +37,7 @@ pipeline "send_message_chat" {
   }
 
   output "message" {
-    value       = step.http.send_message_chat.response_body
+    value       = step.http.send_chat_message.response_body
     description = "The new chat message object."
   }
 }
