@@ -1,7 +1,7 @@
 mod "teams" {
   title         = "Microsoft Teams"
   description   = "Run pipelines and triggers that interact with Microsoft Teams."
-  color         = "#191717"
+  color         = "#4E5FBF"
   documentation = file("./docs/index.md")
   icon          = "/images/flowpipe/mods/turbot/teams.svg"
   categories    = ["teams"]

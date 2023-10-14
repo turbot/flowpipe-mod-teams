@@ -2,7 +2,7 @@
 organization: Turbot
 category: ["productivity"]
 icon_url: "/images/plugins/turbot/teams.svg"
-brand_color: "#191717"
+brand_color: "#4E5FBF"
 display_name: "flowpipe-mod-teams"
 short_name: "flowpipe-mod-teams"
 description: "Flowpipe mod to run pipelines and use triggers for Microsoft Teams resources."
