@@ -10,7 +10,6 @@ pipeline "list_teams" {
   }
 
   step "http" "list_teams" {
-    title  = "List Joined Teams"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/me/joinedTeams"
 
@@ -20,7 +19,7 @@ pipeline "list_teams" {
   }
 
   output "teams" {
-    value       = jsondecode(step.http.list_teams.response_body).value
-    description = "The collection of team objects."
+    value       = step.http.list_teams.response_body
+    description = "Teams details."
   }
 }

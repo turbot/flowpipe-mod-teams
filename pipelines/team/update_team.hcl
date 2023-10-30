@@ -1,5 +1,4 @@
-
-// usage: flowpipe pipeline run update_team --pipeline-arg team_id="TEAM_ID" --pipeline-arg team_membership_id="TEAM_MEMBERSHIP_ID" --pipeline-arg display_name="DISPLAY_NAME" --pipeline-arg description="DESCRIPTION"
+// usage: flowpipe pipeline run update_team --pipeline-arg team_id="9b68a1x9-ab01-5678-1234-956f2846aab4" --pipeline-arg team_description="Updated description for team"  --pipeline-arg visibility="private"
 pipeline "update_team" {
   title       = "Update Team"
   description = "Update the properties of the specified team."
@@ -12,34 +11,55 @@ pipeline "update_team" {
 
   param "team_id" {
     type        = string
+    default     = var.team_id
     description = "The unique identifier of the team."
   }
 
-  param "display_name" {
+  param "team_name" {
     type        = string
     optional    = true
     description = "The name of the team."
   }
 
-  param "description" {
+  param "team_description" {
     type        = string
     optional    = true
     description = "The optional description for the team."
   }
 
+  param "visibility" {
+    type        = string
+    optional    = true
+    description = "The visibility of the group and team. Defaults to public"
+  }
+
+  step "pipeline" "get_team" {
+    pipeline = pipeline.get_team
+    args = {
+      access_token = param.access_token
+      team_id      = param.team_id
+    }
+  }
+
   step "http" "update_team" {
-    title  = "Update Team"
-    method = "patch"
-    url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}"
+    depends_on = [step.pipeline.get_team]
+    method     = "patch"
+    url        = "https://graph.microsoft.com/v1.0/teams/${param.team_id}"
 
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Bearer ${param.access_token}"
     }
 
+    // If the optional params are not passed then retain the original value from the get_team call, otherwise it passes these fields as null
     request_body = jsonencode({
-      displayName = param.display_name,
-      description = param.description
+      displayName = coalesce(param.team_name, step.pipeline.get_team.team.displayName)
+      description = coalesce(param.team_description, step.pipeline.get_team.team.description)
+      visibility  = coalesce(param.visibility, step.pipeline.get_team.team.visibility)
     })
+  }
+
+  output "status_code" {
+    value = step.http.update_team.status_code
   }
 }

@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run get_team --pipeline-arg team_id="TEAM_ID"
+// usage: flowpipe pipeline run get_team --pipeline-arg team_id="9b68a1x9-ab01-5678-1234-956f2846aab4"
 pipeline "get_team" {
   title       = "Get Team"
   description = "Retrieve the properties and relationships of the specified team."
@@ -11,11 +11,11 @@ pipeline "get_team" {
 
   param "team_id" {
     type        = string
+    default     = var.team_id
     description = "The unique identifier of the team."
   }
 
   step "http" "get_team" {
-    title  = "Get Team"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}"
 
@@ -26,6 +26,10 @@ pipeline "get_team" {
 
   output "team" {
     value       = step.http.get_team.response_body
-    description = "The team object."
+    description = "Team details."
+  }
+
+  output "status_code" {
+    value = step.http.get_team.status_code
   }
 }
