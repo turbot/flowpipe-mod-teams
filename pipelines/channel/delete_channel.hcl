@@ -29,8 +29,4 @@ pipeline "delete_channel" {
       Authorization = "Bearer ${param.access_token}"
     }
   }
-
-  output "status_code" {
-    value = step.http.delete_channel.status_code
-  }
 }

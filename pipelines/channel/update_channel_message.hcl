@@ -1,7 +1,7 @@
 // usage: flowpipe pipeline run update_channel_message --pipeline-arg team_id="9b68a1x9-ab01-5678-1234-956f2846aab4" --pipeline-arg channel_id="19:561fbdbbfca848a484f0a6f00ce9dbbd@thread.tacv2" --pipeline-arg message_id="1698686169897" --pipeline-arg message="Hello New World"
 pipeline "update_channel_message" {
   title       = "Update Channel Message"
-  description = "Update chat message in the specified channel."
+  description = "Update a single chat message or a chat message reply in a channel."
 
   param "access_token" {
     type        = string
@@ -44,10 +44,5 @@ pipeline "update_channel_message" {
         content = param.message
       }
     })
-  }
-
-  output "raw_output" {
-    value       = step.http.update_channel_message
-    description = "Channel message details."
   }
 }

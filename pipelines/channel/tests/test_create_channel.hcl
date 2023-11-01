@@ -46,18 +46,18 @@ pipeline "test_create_channel" {
 
   step "sleep" "wait_for_create_complete" {
     depends_on = [step.pipeline.create_channel]
-    duration   = "20s"
+    duration   = "10s"
   }
 
   step "pipeline" "get_channel" {
-    if         = step.pipeline.create_channel.status_code == 201 || step.pipeline.create_channel.status_code == 202
+    if       = !is_error(step.pipeline.create_channel)
     depends_on = [step.sleep.wait_for_create_complete]
 
     pipeline = pipeline.get_channel
     args = {
       access_token = param.access_token
       team_id      = param.team_id
-      channel_id   = step.pipeline.create_channel.channel_id
+      channel_id   = step.pipeline.create_channel.output.channel.id
     }
 
     # Ignore errors so we can delete
@@ -67,28 +67,28 @@ pipeline "test_create_channel" {
   }
 
   step "pipeline" "delete_channel" {
-    if         = step.pipeline.create_channel.status_code == 201 || step.pipeline.create_channel.status_code == 202
+    if       = !is_error(step.pipeline.create_channel)
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
       access_token = param.access_token
       team_id      = var.team_id
-      channel_id   = step.pipeline.create_channel.channel_id
+      channel_id   = step.pipeline.create_channel.output.channel.id
     }
   }
 
   output "create_channel" {
     description = "Check for pipeline.create_channel."
-    value       = step.pipeline.create_channel.status_code == 201 || step.pipeline.create_channel.status_code == 202 ? "pass" : "fail: ${step.pipeline.create_channel.status_code}"
+    value       = !is_error(step.pipeline.create_channel) ? "pass" : "fail: ${step.pipeline.create_channel.errors[0].error.detail}"
   }
 
   output "get_channel" {
     description = "Check for pipeline.get_channel."
-    value       = step.pipeline.get_channel.status_code == 200 ? "pass" : "fail: ${step.pipeline.get_channel.status_code}"
+    value       = !is_error(step.pipeline.get_channel) ? "pass" : "fail: ${step.pipeline.get_channel.errors[0].error.detail}"
   }
 
   output "delete_channel" {
     description = "Check for pipeline.delete_channel."
-    value       = step.pipeline.delete_channel.status_code == 204 ? "pass" : "fail: ${step.pipeline.delete_channel.status_code}"
+    value       = !is_error(step.pipeline.delete_channel) ? "pass" : "fail: ${step.pipeline.delete_channel.errors[0].error.detail}"
   }
 }

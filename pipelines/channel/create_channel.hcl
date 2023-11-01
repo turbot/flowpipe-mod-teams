@@ -52,13 +52,4 @@ pipeline "create_channel" {
     value       = step.http.create_channel.response_body
     description = "Channel details."
   }
-
-  output "channel_id" {
-    value       = step.http.create_channel.response_body.id
-    description = "Channel details."
-  }
-
-  output "status_code" {
-    value = step.http.create_channel.status_code
-  }
 }

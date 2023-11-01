@@ -29,8 +29,4 @@ pipeline "list_channels" {
     value       = step.http.list_channels.response_body
     description = "Channel details."
   }
-
-  output "status_code" {
-    value = step.http.list_channels.status_code
-  }
 }

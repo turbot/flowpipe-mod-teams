@@ -43,84 +43,86 @@ pipeline "test_update_channel_message" {
     pipeline = pipeline.create_channel
     args = {
       access_token        = param.access_token
-      team_id             = param.team_id
-      channel_name        = param.channel_name
       channel_description = param.channel_description
+      channel_name        = param.channel_name
       membership_type     = param.membership_type
+      team_id             = param.team_id
     }
   }
 
   step "sleep" "wait_for_create_complete" {
     depends_on = [step.pipeline.create_channel]
-    duration   = "20s"
+    duration   = "10s"
   }
 
   step "pipeline" "send_channel_message" {
-    pipeline = pipeline.send_channel_message
+    if         = !is_error(step.pipeline.create_channel)
+    depends_on = [step.sleep.wait_for_create_complete]
+    pipeline   = pipeline.send_channel_message
     args = {
       access_token = param.access_token
-      team_id      = param.team_id
-      channel_id   = step.pipeline.create_channel.channel_id
+      channel_id   = step.pipeline.create_channel.output.channel.id
       message      = param.message
+      team_id      = param.team_id
     }
   }
 
   step "pipeline" "update_channel_message" {
-    if       = step.pipeline.send_channel_message.raw_output.status_code == 201
+    if       = !is_error(step.pipeline.send_channel_message)
     pipeline = pipeline.update_channel_message
     args = {
       access_token = param.access_token
-      team_id      = param.team_id
-      channel_id   = step.pipeline.create_channel.channel_id
-      message_id   = step.pipeline.send_channel_message.raw_output.response_body.id
+      channel_id   = step.pipeline.create_channel.output.channel.id
       message      = "Hello New World!"
+      message_id   = step.pipeline.send_channel_message.output.message.id
+      team_id      = param.team_id
     }
   }
 
   step "pipeline" "delete_channel_message" {
-    if       = step.pipeline.update_channel_message.raw_output.status_code == 200 || step.pipeline.update_channel_message.raw_output.status_code == 204
+    if       = !is_error(step.pipeline.send_channel_message)
     pipeline = pipeline.delete_channel_message
     args = {
       access_token = param.access_token
+      channel_id   = step.pipeline.create_channel.output.channel.id
+      message_id   = step.pipeline.send_channel_message.output.message.id
       team_id      = param.team_id
-      channel_id   = step.pipeline.create_channel.channel_id
-      message_id   = step.pipeline.send_channel_message.raw_output.response_body.id
     }
   }
 
   step "pipeline" "delete_channel" {
-    if         = step.pipeline.create_channel.status_code == 201 || step.pipeline.create_channel.status_code == 202
+    if       = !is_error(step.pipeline.create_channel)
     depends_on = [step.pipeline.delete_channel_message]
     pipeline   = pipeline.delete_channel
     args = {
       access_token = param.access_token
+      channel_id   = step.pipeline.create_channel.output.channel.id
       team_id      = var.team_id
-      channel_id   = step.pipeline.create_channel.channel_id
     }
   }
 
   output "create_channel" {
     description = "Check for pipeline.create_channel."
-    value       = step.pipeline.create_channel.status_code == 201 || step.pipeline.create_channel.status_code == 202 ? "pass" : "fail: ${step.pipeline.create_channel.status_code}"
+    value       = !is_error(step.pipeline.create_channel) ? "pass" : "fail: ${step.pipeline.create_channel.errors[0].error.detail}"
   }
 
   output "send_channel_message" {
     description = "Check for pipeline.send_channel_message."
-    value       = step.pipeline.send_channel_message.raw_output.status_code == 201 ? "pass" : "fail: ${step.pipeline.send_channel_message.raw_output.status_code}"
+    value       = !is_error(step.pipeline.send_channel_message) ? "pass" : "fail: ${step.pipeline.send_channel_message.errors[0].error.detail}"
   }
 
   output "update_channel_message" {
     description = "Check for pipeline.update_channel_message."
-    value       = step.pipeline.update_channel_message.raw_output.status_code == 200 || step.pipeline.update_channel_message.raw_output.status_code == 204 ? "pass" : "fail: ${step.pipeline.update_channel_message.raw_output.status_code}"
+    value       = !is_error(step.pipeline.update_channel_message) ? "pass" : "fail: ${step.pipeline.update_channel_message.errors[0].error.detail}"
   }
 
   output "delete_channel_message" {
     description = "Check for pipeline.delete_channel_message."
-    value       = step.pipeline.delete_channel_message.raw_output.status_code == 204 ? "pass" : "fail: ${step.pipeline.delete_channel_message.raw_output.status_code}"
+    value       = !is_error(step.pipeline.delete_channel_message) ? "pass" : "fail: ${step.pipeline.delete_channel_message.errors[0].error.detail}"
   }
 
   output "delete_channel" {
     description = "Check for pipeline.delete_channel."
-    value       = step.pipeline.delete_channel.status_code == 204 ? "pass" : "fail: ${step.pipeline.delete_channel.status_code}"
+    value       = !is_error(step.pipeline.delete_channel) ? "pass" : "fail: ${step.pipeline.delete_channel.errors[0].error.detail}"
   }
 }

@@ -41,8 +41,8 @@ pipeline "send_channel_message" {
     })
   }
 
-  output "raw_output" {
-    value       = step.http.send_channel_message
+  output "message" {
+    value       = step.http.send_channel_message.response_body
     description = "Channel message details."
   }
 }

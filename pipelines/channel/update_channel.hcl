@@ -32,32 +32,18 @@ pipeline "update_channel" {
     description = "Optional textual description for the channel."
   }
 
-  step "pipeline" "get_channel" {
-    pipeline = pipeline.get_channel
-    args = {
-      access_token = param.access_token
-      team_id      = param.team_id
-      channel_id   = param.channel_id
-    }
-  }
-
   step "http" "update_channel" {
-    depends_on = [step.pipeline.get_channel]
     method     = "patch"
     url        = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/channels/${param.channel_id}"
 
     request_headers = {
-      Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      "Content-Type"  = "application/json"
+      "Authorization" = "Bearer ${param.access_token}"
     }
 
-    request_body = jsonencode({
-      displayName = coalesce(param.channel_name, step.pipeline.get_channel.channel.displayName),
-      description = coalesce(param.channel_description, step.pipeline.get_channel.channel.description)
-    })
-  }
-
-  output "status_code" {
-    value = step.http.update_channel.status_code
+    request_body = jsonencode(merge(
+      param.channel_name != null ? { displayName = param.channel_name } : {},
+      param.channel_description != null ? { description = param.channel_description } : {}
+    ))
   }
 }
