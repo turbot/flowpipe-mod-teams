@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run send_chat_message --pipeline-arg chat_id="CHAT_ID" --pipeline-arg message="MESSAGE"
+// usage: flowpipe pipeline run send_chat_message --pipeline-arg chat_id="19:4paze140-abcd-40kb-9c2d-e4b4379ee6c1_944a8e14-1h3t-48c6-bob9-6e93612f6c2b@unq.gbl.spaces" --pipeline-arg message="Hello There"
 pipeline "send_chat_message" {
   title       = "Send Chat Message"
   description = "Send a new chat message in the specified chat."
@@ -31,13 +31,13 @@ pipeline "send_chat_message" {
 
     request_body = jsonencode({
       body = {
-        content = "${param.message}"
+        content = param.message
       }
     })
   }
 
   output "message" {
     value       = step.http.send_chat_message.response_body
-    description = "The new chat message object."
+    description = "Chat message details."
   }
 }

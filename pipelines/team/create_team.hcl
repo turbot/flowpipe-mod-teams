@@ -1,6 +1,6 @@
-// usage: flowpipe pipeline run create_team --pipeline-arg team_name="TEAM_NAME"
+// usage: flowpipe pipeline run create_team --pipeline-arg team_name="my Flowpipe team" --pipeline-arg team_description="Team for Flowpipe"
 pipeline "create_team" {
-  title       = "Create a New Team"
+  title       = "Create Team"
   description = "Create a new team."
 
   param "access_token" {
@@ -22,12 +22,11 @@ pipeline "create_team" {
 
   param "visibility" {
     type        = string
-    default     = "public" // or "private"
+    default     = "public"
     description = "The visibility of the group and team. Defaults to public"
   }
 
   step "http" "create_team" {
-    title  = "Create a New Team"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/teams"
 
@@ -37,15 +36,16 @@ pipeline "create_team" {
     }
 
     request_body = jsonencode({
-      displayName         = param.team_name,
-      description         = param.team_description,
-      isFavoriteByDefault = false,
-      visibility          = param.visibility,
+      "template@odata.bind" = "https://graph.microsoft.com/v1.0/teamsTemplates('standard')"
+      displayName           = param.team_name
+      description           = param.team_description
+      isFavoriteByDefault   = false
+      visibility            = param.visibility
     })
   }
 
-  output "team" {
-    value       = step.http.create_team.response_body
-    description = "The object for the team."
+  output "team_id" {
+    value       = try(element(split("'", step.http.create_team.response_headers.Content-Location), 1), "")
+    description = "The unique identifier of the team."
   }
 }

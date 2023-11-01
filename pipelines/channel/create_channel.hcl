@@ -1,4 +1,4 @@
-// usage: flowpipe pipeline run create_channel --pipeline-arg team_id="TEAM_ID" --pipeline-arg channel_name="test" --pipeline-arg channel_description="test"
+// usage: flowpipe pipeline run create_channel --pipeline-arg team_id="9b68a1x9-ab01-5678-1234-956f2846aab4" --pipeline-arg channel_name="random" --pipeline-arg channel_description="test"
 pipeline "create_channel" {
   title       = "Create Channel"
   description = "Create a new channel in a team."
@@ -11,6 +11,7 @@ pipeline "create_channel" {
 
   param "team_id" {
     type        = string
+    default     = var.team_id
     description = "The unique identifier of the team."
   }
 
@@ -25,8 +26,13 @@ pipeline "create_channel" {
     description = "Optional textual description for the channel."
   }
 
+  param "membership_type" {
+    type        = string
+    default     = "standard"
+    description = "The type of the channel. Can be set during creation and can't be changed. The possible values are: standard, private, unknownFutureValue, shared. The default value is standard."
+  }
+
   step "http" "create_channel" {
-    title  = "Create Channel"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/channels"
 
@@ -36,13 +42,14 @@ pipeline "create_channel" {
     }
 
     request_body = jsonencode({
-      displayName = param.channel_name,
-      description = param.channel_description
+      displayName    = param.channel_name
+      description    = param.channel_description
+      membershipType = param.membership_type
     })
   }
 
   output "channel" {
     value       = step.http.create_channel.response_body
-    description = "The new channel object."
+    description = "Channel details."
   }
 }
