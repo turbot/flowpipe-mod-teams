@@ -11,7 +11,7 @@ pipeline "get_channel" {
 
   param "team_id" {
     type        = string
-    default = var.team_id
+    default     = var.team_id
     description = "The unique identifier of the team."
   }
 

@@ -48,7 +48,7 @@ pipeline "test_send_chat_message" {
 
   step "sleep" "wait_for_send_chat_message" {
     if       = !is_error(step.pipeline.send_chat_message)
-    duration   = "10s"
+    duration = "10s"
   }
 
   step "pipeline" "delete_chat_message" {
@@ -65,16 +65,16 @@ pipeline "test_send_chat_message" {
 
   output "create_chat" {
     description = "Check for pipeline.create_chat."
-    value       = !is_error(step.pipeline.create_chat) ? "pass" : "fail: ${step.pipeline.create_chat.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.create_chat) ? "pass" : "fail: ${step.pipeline.create_chat.errors}"
   }
 
   output "send_chat_message" {
     description = "Check for pipeline.send_channel_message."
-    value       = !is_error(step.pipeline.send_chat_message) ? "pass" : "fail: ${step.pipeline.send_chat_message.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.send_chat_message) ? "pass" : "fail: ${step.pipeline.send_chat_message.errors}"
   }
 
   output "delete_chat_message" {
     description = "Check for pipeline.delete_chat_message."
-    value       = !is_error(step.pipeline.delete_chat_message) ? "pass" : "fail: ${step.pipeline.delete_chat_message.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.delete_chat_message) ? "pass" : "fail: ${step.pipeline.delete_chat_message.errors}"
   }
 }

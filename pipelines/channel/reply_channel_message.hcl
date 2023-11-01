@@ -41,8 +41,8 @@ pipeline "reply_channel_message" {
 
     request_body = jsonencode({
       body = {
-        contentType =  "html",
-        content = param.message
+        contentType = "html",
+        content     = param.message
       }
     })
   }

@@ -33,8 +33,8 @@ pipeline "update_channel" {
   }
 
   step "http" "update_channel" {
-    method     = "patch"
-    url        = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/channels/${param.channel_id}"
+    method = "patch"
+    url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/channels/${param.channel_id}"
 
     request_headers = {
       "Content-Type"  = "application/json"

@@ -25,8 +25,4 @@ pipeline "delete_team" {
       Authorization = "Bearer ${param.access_token}"
     }
   }
-
-  output "status_code" {
-    value = step.http.delete_team.status_code
-  }
 }

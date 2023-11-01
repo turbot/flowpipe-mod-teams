@@ -53,13 +53,9 @@ pipeline "update_team" {
 
     // If the optional params are not passed then retain the original value from the get_team call, otherwise it passes these fields as null
     request_body = jsonencode({
-      displayName = coalesce(param.team_name, step.pipeline.get_team.team.displayName)
-      description = coalesce(param.team_description, step.pipeline.get_team.team.description)
-      visibility  = coalesce(param.visibility, step.pipeline.get_team.team.visibility)
+      displayName = coalesce(param.team_name, step.pipeline.get_team.output.team.displayName)
+      description = coalesce(param.team_description, step.pipeline.get_team.output.team.description)
+      visibility  = coalesce(param.visibility, step.pipeline.get_team.output.team.visibility)
     })
-  }
-
-  output "status_code" {
-    value = step.http.update_team.status_code
   }
 }

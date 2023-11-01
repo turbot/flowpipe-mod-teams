@@ -31,25 +31,25 @@ pipeline "test_create_team" {
     pipeline = pipeline.create_team
     args = {
       access_token     = param.access_token
-      team_name        = param.team_name
       team_description = param.team_description
+      team_name        = param.team_name
       visibility       = param.visibility
     }
   }
 
   step "sleep" "wait_for_create_complete" {
     depends_on = [step.pipeline.create_team]
-    duration   = "20s"
+    duration   = "10s"
   }
 
   step "pipeline" "get_team" {
-    if         = step.pipeline.create_team.status_code == 202
+    if         = !is_error(step.pipeline.create_team)
     depends_on = [step.sleep.wait_for_create_complete]
 
     pipeline = pipeline.get_team
     args = {
       access_token = param.access_token
-      team_id      = step.pipeline.create_team.team_id
+      team_id      = step.pipeline.create_team.output.team_id
     }
 
     # Ignore errors so we can delete
@@ -59,27 +59,27 @@ pipeline "test_create_team" {
   }
 
   step "pipeline" "delete_team" {
-    if         = step.pipeline.create_team.status_code == 202
+    if         = !is_error(step.pipeline.create_team)
     depends_on = [step.pipeline.get_team]
     pipeline   = pipeline.delete_team
     args = {
       access_token = param.access_token
-      team_id      = step.pipeline.create_team.team_id
+      team_id      = step.pipeline.create_team.output.team_id
     }
   }
 
   output "create_team" {
     description = "Check for pipeline.create_team."
-    value       = step.pipeline.create_team.status_code == 202 ? "pass" : "fail: ${step.pipeline.create_team.status_code}"
+    value       = !is_error(step.pipeline.create_team) ? "pass" : "fail: ${step.pipeline.create_team.errors}"
   }
 
   output "get_team" {
     description = "Check for pipeline.get_team."
-    value       = step.pipeline.get_team.status_code == 200 ? "pass" : "fail: ${step.pipeline.get_team.status_code}"
+    value       = !is_error(step.pipeline.get_team) ? "pass" : "fail: ${step.pipeline.get_team.errors}"
   }
 
   output "delete_team" {
     description = "Check for pipeline.delete_team."
-    value       = step.pipeline.delete_team.status_code == 204 ? "pass" : "fail: ${step.pipeline.delete_team.status_code}"
+    value       = !is_error(step.pipeline.delete_team) ? "pass" : "fail: ${step.pipeline.delete_team.errors}"
   }
 }

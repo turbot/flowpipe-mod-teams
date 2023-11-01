@@ -28,8 +28,4 @@ pipeline "get_team" {
     value       = step.http.get_team.response_body
     description = "Team details."
   }
-
-  output "status_code" {
-    value = step.http.get_team.status_code
-  }
 }

@@ -44,10 +44,6 @@ pipeline "create_team" {
     })
   }
 
-  output "status_code" {
-    value = step.http.create_team.status_code
-  }
-
   output "team_id" {
     value       = try(element(split("'", step.http.create_team.response_headers.Content-Location), 1), "")
     description = "The unique identifier of the team."

@@ -56,9 +56,9 @@ pipeline "test_reply_channel_message" {
   }
 
   step "pipeline" "send_channel_message" {
-    if       = !is_error(step.pipeline.create_channel)
+    if         = !is_error(step.pipeline.create_channel)
     depends_on = [step.sleep.wait_for_create_complete]
-    pipeline = pipeline.send_channel_message
+    pipeline   = pipeline.send_channel_message
     args = {
       access_token = param.access_token
       channel_id   = step.pipeline.create_channel.output.channel.id
@@ -97,9 +97,9 @@ pipeline "test_reply_channel_message" {
   }
 
   step "pipeline" "delete_reply_channel_message" {
-    if       = !is_error(step.pipeline.reply_channel_message)
+    if         = !is_error(step.pipeline.reply_channel_message)
     depends_on = [step.pipeline.update_channel_message]
-    pipeline = pipeline.delete_channel_message
+    pipeline   = pipeline.delete_channel_message
     args = {
       access_token = param.access_token
       channel_id   = step.pipeline.create_channel.output.channel.id
@@ -109,9 +109,9 @@ pipeline "test_reply_channel_message" {
   }
 
   step "pipeline" "delete_channel_message" {
-    if       = !is_error(step.pipeline.send_channel_message)
+    if         = !is_error(step.pipeline.send_channel_message)
     depends_on = [step.pipeline.delete_reply_channel_message]
-    pipeline = pipeline.delete_channel_message
+    pipeline   = pipeline.delete_channel_message
     args = {
       access_token = param.access_token
       channel_id   = step.pipeline.create_channel.output.channel.id
@@ -121,7 +121,7 @@ pipeline "test_reply_channel_message" {
   }
 
   step "pipeline" "delete_channel" {
-    if       = !is_error(step.pipeline.create_channel)
+    if         = !is_error(step.pipeline.create_channel)
     depends_on = [step.pipeline.delete_channel_message]
     pipeline   = pipeline.delete_channel
     args = {
@@ -133,36 +133,36 @@ pipeline "test_reply_channel_message" {
 
   output "create_channel" {
     description = "Check for pipeline.create_channel."
-    value       = !is_error(step.pipeline.create_channel) ? "pass" : "fail: ${step.pipeline.create_channel.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.create_channel) ? "pass" : "fail: ${step.pipeline.create_channel.errors}"
   }
 
   output "send_channel_message" {
     description = "Check for pipeline.send_channel_message."
-    value       = !is_error(step.pipeline.send_channel_message) ? "pass" : "fail: ${step.pipeline.send_channel_message.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.send_channel_message) ? "pass" : "fail: ${step.pipeline.send_channel_message.errors}"
   }
 
   output "reply_channel_message" {
     description = "Check for pipeline.reply_channel_message."
-    value       = !is_error(step.pipeline.reply_channel_message) ? "pass" : "fail: ${step.pipeline.reply_channel_message.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.reply_channel_message) ? "pass" : "fail: ${step.pipeline.reply_channel_message.errors}"
   }
 
   output "update_channel_message" {
     description = "Check for pipeline.update_channel_message."
-    value       = !is_error(step.pipeline.update_channel_message) ? "pass" : "fail: ${step.pipeline.update_channel_message.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.update_channel_message) ? "pass" : "fail: ${step.pipeline.update_channel_message.errors}"
   }
 
   output "delete_reply_channel_message" {
     description = "Check for pipeline.delete_channel_message."
-    value       = !is_error(step.pipeline.delete_reply_channel_message) ? "pass" : "fail: ${step.pipeline.delete_reply_channel_message.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.delete_reply_channel_message) ? "pass" : "fail: ${step.pipeline.delete_reply_channel_message.errors}"
   }
 
   output "delete_channel_message" {
     description = "Check for pipeline.delete_channel_message."
-    value       = !is_error(step.pipeline.delete_channel_message) ? "pass" : "fail: ${step.pipeline.delete_channel_message.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.delete_channel_message) ? "pass" : "fail: ${step.pipeline.delete_channel_message.errors}"
   }
 
   output "delete_channel" {
     description = "Check for pipeline.delete_channel."
-    value       = !is_error(step.pipeline.delete_channel) ? "pass" : "fail: ${step.pipeline.delete_channel.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.delete_channel) ? "pass" : "fail: ${step.pipeline.delete_channel.errors}"
   }
 }

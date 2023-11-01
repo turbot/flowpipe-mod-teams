@@ -36,32 +36,32 @@ pipeline "create_chat" {
     }
   }
 
-step "http" "create_chat" {
-  method = "post"
-  url    = "https://graph.microsoft.com/v1.0/chats"
+  step "http" "create_chat" {
+    method = "post"
+    url    = "https://graph.microsoft.com/v1.0/chats"
 
-  request_headers = {
-    "Content-Type"  = "application/json"
-    "Authorization" = "Bearer ${param.access_token}"
+    request_headers = {
+      "Content-Type"  = "application/json"
+      "Authorization" = "Bearer ${param.access_token}"
+    }
+
+    request_body = jsonencode({
+      "chatType" = param.chat_type,
+      "topic"    = param.topic,
+      "members" = concat([
+        {
+          "@odata.type"     = "#microsoft.graph.aadUserConversationMember",
+          "roles"           = ["owner"],
+          "user@odata.bind" = "https://graph.microsoft.com/v1.0/users('${step.pipeline.get_current_user.output.current_user.id}')"
+        }],
+        param.user_ids != null ? [for user_id in param.user_ids : {
+          "@odata.type"     = "#microsoft.graph.aadUserConversationMember",
+          "roles"           = ["owner"],
+          "user@odata.bind" = "https://graph.microsoft.com/v1.0/users('${user_id}')"
+        }] : []
+      )
+    })
   }
-
-  request_body = jsonencode({
-    "chatType" = param.chat_type,
-    "topic" = param.topic,
-    "members" = concat([
-      {
-        "@odata.type" = "#microsoft.graph.aadUserConversationMember",
-        "roles" = ["owner"],
-        "user@odata.bind" = "https://graph.microsoft.com/v1.0/users('${step.pipeline.get_current_user.output.current_user.id}')"
-      }],
-      param.user_ids != null ? [for user_id in param.user_ids : {
-        "@odata.type" = "#microsoft.graph.aadUserConversationMember",
-        "roles" = ["owner"],
-        "user@odata.bind" = "https://graph.microsoft.com/v1.0/users('${user_id}')"
-      }] : []
-    )
-  })
-}
 
   output "chat" {
     value       = step.http.create_chat.response_body

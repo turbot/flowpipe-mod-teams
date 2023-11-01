@@ -50,7 +50,7 @@ pipeline "test_create_channel" {
   }
 
   step "pipeline" "get_channel" {
-    if       = !is_error(step.pipeline.create_channel)
+    if         = !is_error(step.pipeline.create_channel)
     depends_on = [step.sleep.wait_for_create_complete]
 
     pipeline = pipeline.get_channel
@@ -67,7 +67,7 @@ pipeline "test_create_channel" {
   }
 
   step "pipeline" "delete_channel" {
-    if       = !is_error(step.pipeline.create_channel)
+    if         = !is_error(step.pipeline.create_channel)
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
@@ -79,16 +79,16 @@ pipeline "test_create_channel" {
 
   output "create_channel" {
     description = "Check for pipeline.create_channel."
-    value       = !is_error(step.pipeline.create_channel) ? "pass" : "fail: ${step.pipeline.create_channel.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.create_channel) ? "pass" : "fail: ${step.pipeline.create_channel.errors}"
   }
 
   output "get_channel" {
     description = "Check for pipeline.get_channel."
-    value       = !is_error(step.pipeline.get_channel) ? "pass" : "fail: ${step.pipeline.get_channel.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.get_channel) ? "pass" : "fail: ${step.pipeline.get_channel.errors}"
   }
 
   output "delete_channel" {
     description = "Check for pipeline.delete_channel."
-    value       = !is_error(step.pipeline.delete_channel) ? "pass" : "fail: ${step.pipeline.delete_channel.errors[0].error.detail}"
+    value       = !is_error(step.pipeline.delete_channel) ? "pass" : "fail: ${step.pipeline.delete_channel.errors}"
   }
 }
