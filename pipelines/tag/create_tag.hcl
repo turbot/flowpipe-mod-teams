@@ -1,17 +1,16 @@
-// usage: flowpipe pipeline run create_tag --pipeline-arg team_id="TEAM_ID" --pipeline-arg tag_name="TAG_NAME" --pipeline-arg user_id="USER_ID"
 pipeline "create_tag" {
   title       = "Create a Teamwork Tag"
   description = "Create a standard tag for members in a team."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   param "tag_name" {

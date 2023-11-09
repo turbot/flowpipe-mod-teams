@@ -4,8 +4,8 @@ pipeline "test_update_chat_message" {
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "message" {
@@ -16,8 +16,8 @@ pipeline "test_update_chat_message" {
 
   param "topic" {
     type        = string
-    optional    = true
     description = "The title of the chat. The chat title can be provided only if the chat is of group type."
+    optional    = true
   }
 
   step "pipeline" "get_current_user" {

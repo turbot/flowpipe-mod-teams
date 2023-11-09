@@ -1,12 +1,11 @@
-// usage: flowpipe pipeline run add_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg user_id="USER_ID" --pipeline-arg roles="['owner']"
 pipeline "add_team_member" {
   title       = "Add Member to Team"
   description = "Add a new member to a team."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {

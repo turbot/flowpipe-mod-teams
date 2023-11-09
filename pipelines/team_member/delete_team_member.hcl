@@ -1,17 +1,16 @@
-// usage: flowpipe pipeline run remove_team_member --pipeline-arg team_id="TEAM_ID" --pipeline-arg team_membership_id="TEAM_MEMBERSHIP_ID"
 pipeline "remove_team_member" {
   title       = "Remove Member from Team"
   description = "Remove a member from a team."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   param "team_membership_id" {

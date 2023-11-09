@@ -1,17 +1,16 @@
-// usage: flowpipe pipeline run update_tag  --pipeline-arg team_id="TEAM_ID" --pipeline-arg teamwork_tag_id="TEAMWORK_TAG_ID" --pipeline-arg new_tag_name="NEW_TAG_NAME"
 pipeline "update_tag" {
   title       = "Update a Teamwork Tag"
   description = "Update the properties of a tag object."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   param "teamwork_tag_id" {

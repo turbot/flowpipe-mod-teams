@@ -4,8 +4,8 @@ pipeline "test_create_channel" {
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {

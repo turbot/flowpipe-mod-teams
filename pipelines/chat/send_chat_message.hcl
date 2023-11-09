@@ -1,12 +1,11 @@
-// usage: flowpipe pipeline run send_chat_message --pipeline-arg chat_id="19:4paze140-abcd-40kb-9c2d-e4b4379ee6c1_944a8e14-1h3t-48c6-bob9-6e93612f6c2b@unq.gbl.spaces" --pipeline-arg message="Hello There"
 pipeline "send_chat_message" {
   title       = "Send Chat Message"
   description = "Send a new chat message in the specified chat."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "chat_id" {

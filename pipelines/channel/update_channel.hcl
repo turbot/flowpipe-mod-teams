@@ -1,18 +1,16 @@
-// usage: flowpipe pipeline run update_channel --pipeline-arg channel_id="19:561fbdbbfca848a484f0a6f00ce9dbbd@thread.tacv2" --pipeline-arg channel_description="All Hands Channel" --pipeline-arg channel_name="all-hands"
 pipeline "update_channel" {
   title       = "Update Channel"
   description = "Update the properties of the specified channel."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    default     = var.team_id
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   param "channel_id" {

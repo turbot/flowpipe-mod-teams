@@ -1,32 +1,29 @@
-// usage: 
-// Create a group with self - helpful in test cases: flowpipe pipeline run create_chat --pipeline-arg chat_type="group" --pipeline-arg topic="wow such empty" 
-// Create a group with multiple users: flowpipe pipeline run create_chat  --pipeline-arg chat_type="group" --pipeline-arg topic="meeting" --pipeline-arg user_ids='["10101010-aaaa-bbbb-cccc-999999999999", "10101010-aaaa-bbbb-cccc-999999999999"]'
-// Create a oneOnOne with user: flowpipe pipeline run create_chat --pipeline-arg chat_type="oneOnOne" --pipeline-arg user_ids='["10101010-aaaa-bbbb-cccc-999999999999"]'
+
 pipeline "create_chat" {
   title       = "Create Chat"
-  description = "Create a new oneOnOne or group chat object."
+  description = "Create a new one-on-one or group chat object."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "chat_type" {
     type        = string
-    description = "Specifies the type of chat. Possible values are: group and oneOnOne."
+    description = "Specifies the type of chat. Possible values are group and oneOnOne."
   }
 
   param "topic" {
     type        = string
-    optional    = true
     description = "The title of the chat. The chat title can be provided only if the chat is of group type."
+    optional    = true
   }
 
   param "user_ids" {
     type        = list(string)
+    description = "The unique identifier for the user. One-on-one chat requires minimum of 2 users including the current user."
     optional    = true
-    description = "The unique identifier for the user."
   }
 
   step "pipeline" "get_current_user" {

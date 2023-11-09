@@ -1,17 +1,16 @@
-// usage : flowpipe pipeline run list_tags --pipeline-arg team_id="TEAM_ID"
 pipeline "list_tags" {
   title       = "List all Teamwork Tags"
   description = "Get a list of the tag objects and their properties."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   step "http" "list_tags" {

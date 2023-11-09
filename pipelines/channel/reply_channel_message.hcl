@@ -1,23 +1,21 @@
-// usage: flowpipe pipeline run reply_channel_message --pipeline-arg team_id="9b68a1x9-ab01-5678-1234-956f2846aab4" --pipeline-arg channel_id="19:561fbdbbfca848a484f0a6f00ce9dbbd@thread.tacv2" --pipeline-arg message="Hello World" --pipeline-arg message_id="1698737048972"
 pipeline "reply_channel_message" {
   title       = "Reply Channel Message"
   description = "Send a new reply to a message in a specified channel."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    default     = var.team_id
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   param "channel_id" {
     type        = string
-    description = "The unique identifier for the channel."
+    description = local.channel_id_param_description
   }
 
   param "message" {

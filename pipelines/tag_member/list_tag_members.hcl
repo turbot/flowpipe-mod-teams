@@ -1,17 +1,16 @@
-// usage : flowpipe pipeline run list_tag_members  --pipeline-arg team_id="TEAM_D" --pipeline-arg teamwork_tag_id="TAG_D" 
 pipeline "list_tag_members" {
   title       = "List Members in a Teamwork Tag"
   description = "Get a list of the members of a standard tag in a team and their properties."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   param "teamwork_tag_id" {

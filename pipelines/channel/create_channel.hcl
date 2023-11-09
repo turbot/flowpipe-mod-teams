@@ -1,18 +1,16 @@
-// usage: flowpipe pipeline run create_channel --pipeline-arg team_id="9b68a1x9-ab01-5678-1234-956f2846aab4" --pipeline-arg channel_name="random" --pipeline-arg channel_description="test"
 pipeline "create_channel" {
   title       = "Create Channel"
   description = "Create a new channel in a team."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    default     = var.team_id
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   param "channel_name" {
@@ -22,14 +20,14 @@ pipeline "create_channel" {
 
   param "channel_description" {
     type        = string
-    optional    = true
     description = "Optional textual description for the channel."
+    optional    = true
   }
 
   param "membership_type" {
     type        = string
-    default     = "standard"
     description = "The type of the channel. Can be set during creation and can't be changed. The possible values are: standard, private, unknownFutureValue, shared. The default value is standard."
+    default     = "standard"
   }
 
   step "http" "create_channel" {

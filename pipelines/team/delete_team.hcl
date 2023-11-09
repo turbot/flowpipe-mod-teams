@@ -1,18 +1,16 @@
-// usage: flowpipe pipeline run delete_team --pipeline-arg team_id="9b68a1x9-ab01-5678-1234-956f2846aab4"
 pipeline "delete_team" {
   title       = "Delete Team"
   description = "Delete a new team."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_id" {
     type        = string
-    default     = var.team_id
-    description = "The unique identifier of the team."
+    description = local.team_id_param_description
   }
 
   step "http" "delete_team" {

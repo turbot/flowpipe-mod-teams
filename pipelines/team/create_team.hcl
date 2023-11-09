@@ -1,12 +1,11 @@
-// usage: flowpipe pipeline run create_team --pipeline-arg team_name="my Flowpipe team" --pipeline-arg team_description="Team for Flowpipe"
 pipeline "create_team" {
   title       = "Create Team"
   description = "Create a new team."
 
   param "access_token" {
     type        = string
+    description = local.access_token_param_description
     default     = var.access_token
-    description = "The access token to use for the request."
   }
 
   param "team_name" {
