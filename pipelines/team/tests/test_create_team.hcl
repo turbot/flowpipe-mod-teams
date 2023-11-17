@@ -10,8 +10,8 @@ pipeline "test_create_team" {
 
   param "team_name" {
     type        = string
-    default     = "flowpipe-test-team"
     description = "The name of the team."
+    default     = "flowpipe-test-team"
   }
 
   param "team_description" {
@@ -23,8 +23,8 @@ pipeline "test_create_team" {
 
   param "visibility" {
     type        = string
-    default     = "public"
     description = "The visibility of the group and team. Defaults to public"
+    default     = "public"
   }
 
   step "pipeline" "create_team" {

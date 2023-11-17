@@ -22,21 +22,21 @@ pipeline "test_reply_channel_message" {
 
   param "channel_name" {
     type        = string
-    default     = "fp-channel-${uuid()}"
     description = "The name of the channel."
+    default     = "fp-channel-${uuid()}"
   }
 
   param "channel_description" {
     type        = string
-    optional    = true
-    default     = "flowpipe-test-channel"
     description = "Flowpipe test channel."
+    default     = "flowpipe-test-channel"
+    optional    = true
   }
 
   param "membership_type" {
-    type        = string
-    default     = "standard"
+    type    = string
     description = "The type of the channel. The possible values are: standard, private, unknownFutureValue, shared. The default value is standard."
+    default = "standard"
   }
 
   step "pipeline" "create_channel" {

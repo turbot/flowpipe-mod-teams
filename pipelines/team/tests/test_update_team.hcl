@@ -10,21 +10,21 @@ pipeline "test_update_team" {
 
   param "team_name" {
     type        = string
-    default     = "flowpipe-mod-test-team"
     description = "The name of the team."
+    default     = "flowpipe-mod-test-team"
   }
 
   param "team_description" {
     type        = string
+    description = "Flowpipe test team."
     optional    = true
     default     = "flowpipe-mod-test-team"
-    description = "Flowpipe test team."
   }
 
   param "visibility" {
     type        = string
-    default     = "private"
     description = "The visibility of the group and team."
+    default     = "private"
   }
 
   step "pipeline" "create_team" {

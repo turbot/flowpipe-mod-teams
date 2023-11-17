@@ -20,14 +20,15 @@ pipeline "update_channel" {
 
   param "channel_name" {
     type        = string
-    optional    = true
     description = "Channel name as it will appear to the user in Microsoft Teams."
+    optional    = true
+
   }
 
   param "channel_description" {
     type        = string
-    optional    = true
     description = "Optional textual description for the channel."
+    optional    = true
   }
 
   step "http" "update_channel" {

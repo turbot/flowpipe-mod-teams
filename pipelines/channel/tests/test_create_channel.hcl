@@ -10,27 +10,27 @@ pipeline "test_create_channel" {
 
   param "team_id" {
     type        = string
-    default     = var.team_id
     description = "The unique identifier of the team."
+    default     = var.team_id
   }
 
   param "channel_name" {
     type        = string
-    default     = "fp-channel-${uuid()}"
     description = "The name of the channel."
+    default     = "fp-channel-${uuid()}"
   }
 
   param "channel_description" {
     type        = string
-    optional    = true
-    default     = "flowpipe-test-channel"
     description = "Flowpipe test channel."
+    default     = "flowpipe-test-channel"
+    optional    = true
   }
 
   param "membership_type" {
     type        = string
-    default     = "standard"
     description = "The type of the channel. The possible values are: standard, private, unknownFutureValue, shared. The default value is standard."
+    default     = "standard"
   }
 
   step "pipeline" "create_channel" {
