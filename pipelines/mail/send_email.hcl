@@ -21,13 +21,11 @@ pipeline "send_email" {
   param "to_email" {
     type        = list(string)
     description = "The email-id(s) of the primary receipient(s)."
-    default     = ["rkforever@gmail.com"]
   }
 
   param "cc_email" {
     type        = list(string)
     description = "The email-id(s) of the receipient(s) in CC."
-    default     = ["raj@turbot.com", "rkforever@gmail.com"]
   }
 
   step "http" "send_email" {
@@ -55,9 +53,9 @@ pipeline "send_email" {
           }
         ],
         "ccRecipients" : [
-          for email in param.cc_email : {
+          for cc_email in param.cc_email : {
             "emailAddress" : {
-              "address" : email
+              "address" : cc_email
             }
           }
         ]
