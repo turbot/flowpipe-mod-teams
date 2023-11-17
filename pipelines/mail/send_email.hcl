@@ -1,6 +1,6 @@
 pipeline "send_email" {
   title       = "Send Email"
-  description = "Send a mail message to a recipient."
+  description = "Send email to recipient(s)."
 
   param "access_token" {
     type        = string
@@ -19,8 +19,15 @@ pipeline "send_email" {
   }
 
   param "to_email" {
-    type        = string
-    description = "The email-id of the receipient."
+    type        = list(string)
+    description = "The email-id(s) of the primary receipient(s)."
+    default     = ["rkforever@gmail.com"]
+  }
+
+  param "cc_email" {
+    type        = list(string)
+    description = "The email-id(s) of the receipient(s) in CC."
+    default     = ["raj@turbot.com", "rkforever@gmail.com"]
   }
 
   step "http" "send_email" {
@@ -41,9 +48,16 @@ pipeline "send_email" {
           "content" : "${param.content}"
         },
         "toRecipients" : [
-          {
+          for email in param.to_email : {
             "emailAddress" : {
-              "address" : "${param.to_email}"
+              "address" : email
+            }
+          }
+        ],
+        "ccRecipients" : [
+          for email in param.cc_email : {
+            "emailAddress" : {
+              "address" : email
             }
           }
         ]
