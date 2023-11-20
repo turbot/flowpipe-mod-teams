@@ -1,5 +1,4 @@
-//Usage flowpipe pipeline run send_email --pipeline-arg subject="Email Subject" --pipeline-arg content="Body" --pipeline-arg cc_email='["test@test.com"]' --pi
-// peline-arg to_email='["test@turbot.com", "test@gmail.com"]'
+// Usage flowpipe pipeline run send_email --pipeline-arg subject="Email Subject" --pipeline-arg content="Body"  --pipeline-arg to_email='["test@turbot.com", "test@gmail.com"]'
 pipeline "send_email" {
   title       = "Send Email"
   description = "Send email to recipient(s)."
@@ -25,13 +24,6 @@ pipeline "send_email" {
     description = "The email-id(s) of the primary receipient(s)."
   }
 
-  // TO DO MAKING OPTIONAL IT FAILS Flowpipe v0.1.0-beta.202311140126
-  // param "cc_email" {
-  //   type        = list(string)
-  //   description = "The email-id(s) of the receipient(s) in CC."
-  //   optional    = true
-  // }
-
   step "http" "send_email" {
     title  = "Send Mail"
     method = "post"
@@ -56,13 +48,6 @@ pipeline "send_email" {
             }
           }
         ]
-        // "ccRecipients" : [
-        //   for cc_email in param.cc_email : {
-        //     "emailAddress" : {
-        //       "address" : cc_email
-        //     }
-        //   }
-        // ]
       }
     })
   }
