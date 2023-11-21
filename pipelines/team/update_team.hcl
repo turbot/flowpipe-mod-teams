@@ -15,20 +15,20 @@ pipeline "update_team" {
 
   param "team_name" {
     type        = string
-    optional    = true
     description = "The name of the team."
+    optional    = true
   }
 
   param "team_description" {
     type        = string
-    optional    = true
     description = "The optional description for the team."
+    optional    = true
   }
 
   param "visibility" {
     type        = string
-    optional    = true
     description = "The visibility of the group and team. Defaults to public"
+    optional    = true
   }
 
   step "pipeline" "get_team" {

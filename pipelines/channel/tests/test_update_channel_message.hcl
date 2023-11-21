@@ -28,15 +28,16 @@ pipeline "test_update_channel_message" {
 
   param "channel_description" {
     type        = string
-    optional    = true
-    default     = "flowpipe-test-channel"
     description = "Flowpipe test channel."
+    default     = "flowpipe-test-channel"
+    optional    = true
+
   }
 
   param "membership_type" {
     type        = string
-    default     = "standard"
     description = "The type of the channel. The possible values are: standard, private, unknownFutureValue, shared. The default value is standard."
+    default     = "standard"
   }
 
   step "pipeline" "create_channel" {
