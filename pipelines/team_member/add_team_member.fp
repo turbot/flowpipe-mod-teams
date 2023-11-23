@@ -11,11 +11,13 @@ pipeline "add_team_member" {
   param "team_id" {
     type        = string
     description = "The unique identifier for the team."
+    default     = "cis@turbotoffice.onmicrosoft.com"
   }
 
   param "user_id" {
     type        = string
     description = "The unique identifier for the user."
+    default     = "test5cis@turbotoffice.onmicrosoft.com"
   }
 
   param "roles" {
@@ -35,9 +37,8 @@ pipeline "add_team_member" {
     }
 
     request_body = jsonencode({
-      "@odata.type"     = "#microsoft.graph.aadUserConversationMember",
-      "user@odata.bind" = "https://graph.microsoft.com/v1.0/users('${param.user_id}')",
-      "roles"           = param.roles
+      "user@odata.bind" : "https://graph.microsoft.com/v1.0/users('${param.user_id}')"
+      roles = param.roles,
     })
   }
 }
