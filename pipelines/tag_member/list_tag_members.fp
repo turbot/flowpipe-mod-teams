@@ -1,5 +1,5 @@
 pipeline "list_tag_members" {
-  title       = "List Members in a Teamwork Tag"
+  title       = "List Teamwork Tag Members"
   description = "Get a list of the members of a standard tag in a team and their properties."
 
   param "access_token" {
@@ -15,11 +15,10 @@ pipeline "list_tag_members" {
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The unique identifier for the tag."
+    description = local.teamwork_tag_id_param_description
   }
 
   step "http" "list_tag_members" {
-    title  = "List Members in a Teamwork Tag"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members"
 

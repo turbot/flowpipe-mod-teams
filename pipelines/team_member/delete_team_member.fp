@@ -1,6 +1,6 @@
 pipeline "remove_team_member" {
-  title       = "Remove Member from Team"
-  description = "Remove a member from a team."
+  title       = "Remove Team Member"
+  description = "Remove a conversation member from a team."
 
   param "access_token" {
     type        = string
@@ -19,7 +19,6 @@ pipeline "remove_team_member" {
   }
 
   step "http" "remove_team_member" {
-    title  = "Remove Member from Team"
     method = "delete"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members/${param.team_membership_id}"
 

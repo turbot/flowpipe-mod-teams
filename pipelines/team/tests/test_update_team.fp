@@ -10,7 +10,7 @@ pipeline "test_update_team" {
 
   param "team_name" {
     type        = string
-    description = "The name of the team."
+    description = local.team_name_param_description
     default     = "flowpipe-mod-test-team"
   }
 

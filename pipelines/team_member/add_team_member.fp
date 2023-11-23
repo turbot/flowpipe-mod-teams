@@ -1,6 +1,6 @@
 pipeline "add_team_member" {
-  title       = "Add Member to Team"
-  description = "Add a new member to a team."
+  title       = "Add Team Member"
+  description = "Add a new conversation member to a team."
 
   param "access_token" {
     type        = string
@@ -10,7 +10,7 @@ pipeline "add_team_member" {
 
   param "team_id" {
     type        = string
-    description = "The unique identifier for the team."
+    description = local.team_id_param_description
   }
 
   param "user_id" {
@@ -25,7 +25,6 @@ pipeline "add_team_member" {
   }
 
   step "http" "add_team_member" {
-    title  = "Add Member to Team"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members"
 

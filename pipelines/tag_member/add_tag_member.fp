@@ -1,5 +1,5 @@
 pipeline "add_tag_member" {
-  title       = "Add a Teamwork Tag Member"
+  title       = "Add Teamwork Tag Member"
   description = "Create a new teamwork tag member object in a team."
 
   param "access_token" {
@@ -15,7 +15,7 @@ pipeline "add_tag_member" {
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The unique identifier for the tag."
+    description = local.teamwork_tag_id_param_description
   }
 
   param "user_id" {
@@ -24,7 +24,6 @@ pipeline "add_tag_member" {
   }
 
   step "http" "add_tag_member" {
-    title  = "Add a Teamwork Tag Member"
     method = "post"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members"
 

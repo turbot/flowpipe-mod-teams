@@ -1,5 +1,5 @@
 pipeline "get_tag" {
-  title       = "Get a Teamwork Tag"
+  title       = "Get Teamwork Tag"
   description = "Read the properties and relationships of a tag object."
 
   param "access_token" {
@@ -15,11 +15,10 @@ pipeline "get_tag" {
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The unique identifier for the tag."
+    description = local.teamwork_tag_id_param_description
   }
 
   step "http" "get_tag" {
-    title  = "Get Teamwork Tag"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 

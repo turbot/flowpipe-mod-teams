@@ -1,4 +1,3 @@
-// usage: flowpipe pipeline run update_chat_message --pipeline-arg chat_id="19:4paze140-abcd-40kb-9c2d-e4b4379ee6c1_944a8e14-1h3t-48c6-bob9-6e93612f6c2b@unq.gbl.spaces" --pipeline-arg message_id="1698751207618" --pipeline-arg message="Hello World returns"
 pipeline "update_chat_message" {
   title       = "Update Chat Message"
   description = "Update a chat message."
@@ -11,7 +10,7 @@ pipeline "update_chat_message" {
 
   param "chat_id" {
     type        = string
-    description = "The unique identifier for the chat."
+    description = local.chat_id_param_description
   }
 
   param "message" {
@@ -21,7 +20,7 @@ pipeline "update_chat_message" {
 
   param "message_id" {
     type        = string
-    description = "The unique identifier for the message."
+    description = local.message_id_param_description
   }
 
   step "http" "update_chat_message" {

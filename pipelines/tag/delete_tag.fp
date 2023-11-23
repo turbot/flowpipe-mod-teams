@@ -1,5 +1,5 @@
 pipeline "delete_tag" {
-  title       = "Delete a Teamwork Tag"
+  title       = "Delete Teamwork Tag"
   description = "Delete a tag object permanently."
 
   param "access_token" {
@@ -15,11 +15,10 @@ pipeline "delete_tag" {
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The unique identifier for the tag."
+    description = local.teamwork_tag_id_param_description
   }
 
   step "http" "delete_tag" {
-    title  = "Delete a Teamwork Tag"
     method = "delete"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 

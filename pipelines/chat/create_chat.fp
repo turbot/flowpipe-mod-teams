@@ -1,7 +1,7 @@
 
 pipeline "create_chat" {
   title       = "Create Chat"
-  description = "Create a new one-on-one or group chat object."
+  description = "Create a new one-on-one or group chat."
 
   param "access_token" {
     type        = string
@@ -11,18 +11,18 @@ pipeline "create_chat" {
 
   param "chat_type" {
     type        = string
-    description = "Specifies the type of chat. Possible values are group and oneOnOne."
+    description = "Specifies the type of chat."
   }
 
   param "topic" {
     type        = string
-    description = "The title of the chat. The chat title can be provided only if the chat is of group type."
+    description = local.chat_topic_param_description
     optional    = true
   }
 
   param "user_ids" {
     type        = list(string)
-    description = "The unique identifier for the user. One-on-one chat requires minimum of 2 users including the current user."
+    description = "List of conversation members that should be added. One-on-one chat requires minimum of 2 users including the current user."
     optional    = true
   }
 

@@ -1,6 +1,6 @@
 pipeline "list_chats" {
   title       = "List Chats"
-  description = "List Chats."
+  description = "Retrieve the list of chats that the user is part of."
 
   param "access_token" {
     type        = string
@@ -20,6 +20,6 @@ pipeline "list_chats" {
 
   output "chats" {
     value       = step.http.list_chats.response_body
-    description = "Chats details."
+    description = "List of chats."
   }
 }

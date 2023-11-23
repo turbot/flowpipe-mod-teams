@@ -1,6 +1,6 @@
 pipeline "reply_channel_message" {
   title       = "Reply Channel Message"
-  description = "Send a new reply to a message in a specified channel."
+  description = "Send a new reply to a chat message in a specified channel."
 
   param "access_token" {
     type        = string
@@ -25,7 +25,7 @@ pipeline "reply_channel_message" {
 
   param "message_id" {
     type        = string
-    description = "The unique identifier for the message."
+    description = local.message_id_param_description
   }
 
   step "http" "reply_channel_message" {

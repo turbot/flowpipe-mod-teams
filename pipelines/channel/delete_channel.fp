@@ -1,6 +1,6 @@
 pipeline "delete_channel" {
   title       = "Delete Channel"
-  description = "Delete the channel from team."
+  description = "Delete the channel."
 
   param "access_token" {
     type        = string
@@ -15,7 +15,7 @@ pipeline "delete_channel" {
 
   param "channel_id" {
     type        = string
-    description = "The unique identifier of the channel."
+    description = local.channel_id_param_description
   }
 
   step "http" "delete_channel" {

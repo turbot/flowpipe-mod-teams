@@ -1,5 +1,5 @@
 pipeline "list_tags" {
-  title       = "List all Teamwork Tags"
+  title       = "List Teamwork Tags"
   description = "Get a list of the tag objects and their properties."
 
   param "access_token" {
@@ -14,7 +14,6 @@ pipeline "list_tags" {
   }
 
   step "http" "list_tags" {
-    title  = "List all Teamwork Tags"
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/"
 

@@ -1,5 +1,5 @@
 pipeline "create_tag" {
-  title       = "Create a Teamwork Tag"
+  title       = "Create Teamwork Tag"
   description = "Create a standard tag for members in a team."
 
   param "access_token" {
@@ -24,7 +24,6 @@ pipeline "create_tag" {
   }
 
   step "http" "create_tag" {
-    title  = "Create a Teamwork Tag"
     method = "post"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags"
 
@@ -43,6 +42,6 @@ pipeline "create_tag" {
 
   output "tag" {
     value       = step.http.create_tag.response_body
-    description = "The created teamwork tag object."
+    description = "The created teamwork tag."
   }
 }

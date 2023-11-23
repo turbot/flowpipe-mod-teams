@@ -1,6 +1,6 @@
 pipeline "delete_team" {
   title       = "Delete Team"
-  description = "Delete a new team."
+  description = "Delete a team."
 
   param "access_token" {
     type        = string

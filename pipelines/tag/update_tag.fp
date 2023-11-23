@@ -1,5 +1,5 @@
 pipeline "update_tag" {
-  title       = "Update a Teamwork Tag"
+  title       = "Update Teamwork Tag"
   description = "Update the properties of a tag object."
 
   param "access_token" {
@@ -15,7 +15,7 @@ pipeline "update_tag" {
 
   param "teamwork_tag_id" {
     type        = string
-    description = "The unique identifier for the tag."
+    description = local.teamwork_tag_id_param_description
   }
 
   param "new_tag_name" {
@@ -24,7 +24,6 @@ pipeline "update_tag" {
   }
 
   step "http" "update_tag" {
-    title  = "Update a Teamwork Tag"
     method = "patch"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 

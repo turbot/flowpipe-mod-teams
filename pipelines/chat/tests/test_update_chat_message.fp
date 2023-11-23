@@ -16,7 +16,7 @@ pipeline "test_update_chat_message" {
 
   param "topic" {
     type        = string
-    description = "The title of the chat. The chat title can be provided only if the chat is of group type."
+    description = local.chat_topic_param_description
     optional    = true
   }
 

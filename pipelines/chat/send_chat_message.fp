@@ -10,7 +10,7 @@ pipeline "send_chat_message" {
 
   param "chat_id" {
     type        = string
-    description = "The chat's unique identifier."
+    description = local.chat_id_param_description
   }
 
   param "message" {
@@ -25,7 +25,6 @@ pipeline "send_chat_message" {
   }
 
   step "http" "send_chat_message" {
-    title  = "Send Chat Message"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/chats/${param.chat_id}/messages"
 

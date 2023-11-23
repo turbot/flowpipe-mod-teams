@@ -15,12 +15,12 @@ pipeline "create_channel" {
 
   param "channel_name" {
     type        = string
-    description = "Channel name as it will appear to the user in Microsoft Teams."
+    description = local.channel_name_param_description
   }
 
   param "channel_description" {
     type        = string
-    description = "Optional textual description for the channel."
+    description = local.channel_description_param_description
     optional    = true
   }
 
@@ -48,6 +48,6 @@ pipeline "create_channel" {
 
   output "channel" {
     value       = step.http.create_channel.response_body
-    description = "Channel details."
+    description = "The created channel."
   }
 }

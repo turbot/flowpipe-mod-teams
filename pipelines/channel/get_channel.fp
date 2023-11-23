@@ -1,6 +1,6 @@
 pipeline "get_channel" {
   title       = "Get Channel"
-  description = "Get the properties of a specific channel in the team."
+  description = "Retrieve the properties and relationships of a channel."
 
   param "access_token" {
     type        = string
@@ -15,7 +15,7 @@ pipeline "get_channel" {
 
   param "channel_id" {
     type        = string
-    description = "The unique identifier of the channel."
+    description = local.channel_id_param_description
   }
 
   step "http" "get_channel" {

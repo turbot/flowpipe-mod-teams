@@ -1,6 +1,6 @@
 pipeline "update_channel_message" {
   title       = "Update Channel Message"
-  description = "Update a single chat message or a chat message reply in a channel."
+  description = "Update a chat message in a channel."
 
   param "access_token" {
     type        = string
@@ -25,7 +25,7 @@ pipeline "update_channel_message" {
 
   param "message_id" {
     type        = string
-    description = "The unique identifier for the message."
+    description = local.message_id_param_description
   }
 
   step "http" "update_channel_message" {

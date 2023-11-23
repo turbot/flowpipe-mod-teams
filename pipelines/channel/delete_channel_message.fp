@@ -1,6 +1,6 @@
 pipeline "delete_channel_message" {
   title       = "Delete Channel Message"
-  description = "Soft delete a single chat message or a chat message reply in a channel."
+  description = "Delete a single chat message in a channel."
 
   param "access_token" {
     type        = string
@@ -20,7 +20,7 @@ pipeline "delete_channel_message" {
 
   param "message_id" {
     type        = string
-    description = "The unique identifier for the message."
+    description = local.message_id_param_description
   }
 
   step "http" "delete_channel_message" {

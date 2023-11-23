@@ -1,8 +1,8 @@
 # Teams Mod for Flowpipe
 
 A collection of [Flowpipe](https://flowpipe.io) pipelines that can be used to:
+- Send messages
 - Create teams
-- Manage members
 - Manage channels
 - And more!
 
@@ -11,7 +11,6 @@ A collection of [Flowpipe](https://flowpipe.io) pipelines that can be used to:
 ## Documentation
 
 - **[Pipelines →](https://hub.flowpipe.io/mods/turbot/teams/pipelines)**
-- **[Triggers →](https://hub.flowpipe.io/mods/turbot/teams/triggers)**
 
 ## Getting started
 
@@ -36,15 +35,15 @@ cd flowpipe-mod-teams
 Configure your credentials:
 
 ```sh
-cp flowpipe.pvars.example flowpipe.pvars
-vi flowpipe.pvars
+cp flowpipe.fpvars.example flowpipe.fpvars
+vi flowpipe.fpvars
 ```
 
-It's recommended to configure credentials through [input variables](https://flowpipe.io/docs/using-flowpipe/mod-variables) by setting them in the `flowpipe.pvars` file.
+It's recommended to configure credentials through [input variables](https://flowpipe.io/docs/using-flowpipe/mod-variables) by setting them in the `flowpipe.fpvars` file.
 
-**Note:** Credentials can also be passed in each pipeline run with `--pipeline-arg acces_token=YourAccessToken`.
+**Note:** Credentials can also be passed in each pipeline run with `--arg acces_token=YourAccessToken`.
 
-Additional input variables may be defined in the mod's `variables.hcl` file that can be configured to better match your environment and requirements.
+Additional input variables may be defined in the mod's `variables.fp` file that can be configured to better match your environment and requirements.
 
 Variables with defaults set do not need to be explicitly set, but it may be helpful to override them.
 
@@ -67,10 +66,10 @@ flowpipe pipeline run list_teams
 To pass values into pipeline [parameters](https://flowpipe.io/docs/using-flowpipe/pipeline-parameters), use the following syntax:
 
 ```sh
-flowpipe pipeline run delete_team --pipeline-arg team_id=0f8b3036-1111-4f5c-99a8-d2e36c34cf12
+flowpipe pipeline run delete_team --arg team_id=0f8b3036-1111-4f5c-99a8-d2e36c34cf12
 ```
 
-Multiple pipeline args can be passed in with separate `--pipeline-arg` flags.
+Multiple pipeline args can be passed in with separate `--arg` flags.
 
 For more information on passing arguments, please see [Pipeline Args](https://flowpipe.io/docs/using-flowpipe/pipeline-arguments).
 

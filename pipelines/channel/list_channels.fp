@@ -1,6 +1,6 @@
 pipeline "list_channels" {
   title       = "List Channels"
-  description = "List the channels in a team."
+  description = "Retrieve the list of channels in this team."
 
   param "access_token" {
     type        = string
@@ -25,6 +25,6 @@ pipeline "list_channels" {
 
   output "channels" {
     value       = step.http.list_channels.response_body
-    description = "Channel details."
+    description = "List of channels."
   }
 }
