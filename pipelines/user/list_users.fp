@@ -1,6 +1,6 @@
-pipeline "list_organization_users" {
-  title       = "List Organization Users"
-  description = "Retrieve the list of organization users."
+pipeline "list_users" {
+  title       = "List Users"
+  description = "Retrieve the list of users."
 
   param "access_token" {
     type        = string
@@ -8,7 +8,7 @@ pipeline "list_organization_users" {
     default     = var.access_token
   }
 
-  step "http" "list_organization_users" {
+  step "http" "list_users" {
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/users"
 
@@ -19,7 +19,7 @@ pipeline "list_organization_users" {
   }
 
   output "users" {
-    value       = step.http.list_organization_users.response_body
-    description = "List of organization users."
+    value       = step.http.list_users.response_body
+    description = "List of users."
   }
 }

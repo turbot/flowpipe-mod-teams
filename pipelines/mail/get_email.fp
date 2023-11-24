@@ -1,6 +1,6 @@
 pipeline "get_email" {
   title       = "Get Email"
-  description = "Get details of an email."
+  description = "Retrieve the properties and relationships of an email."
 
   param "access_token" {
     type        = string
@@ -10,7 +10,7 @@ pipeline "get_email" {
 
   param "user_id" {
     type        = string
-    description = "The unique identifier for the user."
+    description = local.user_id_param_description
   }
 
   param "message_id" {

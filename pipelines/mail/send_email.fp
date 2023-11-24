@@ -1,4 +1,3 @@
-// Usage flowpipe pipeline run send_email --pipeline-arg subject="Email Subject" --pipeline-arg content="Body"  --pipeline-arg to_email='["test@turbot.com", "test@gmail.com"]'
 pipeline "send_email" {
   title       = "Send Email"
   description = "Send email to recipient(s)."
@@ -25,7 +24,6 @@ pipeline "send_email" {
   }
 
   step "http" "send_email" {
-    title  = "Send Mail"
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/me/sendMail"
 

@@ -10,12 +10,12 @@ pipeline "delete_email" {
 
   param "user_id" {
     type        = string
-    description = "The unique identifier for the user."
+    description = local.user_id_param_description
   }
 
   param "message_id" {
     type        = string
-    description = "The email message ID which needs to be deleted."
+    description = "The email message ID to delete."
   }
 
   step "http" "delete_email" {

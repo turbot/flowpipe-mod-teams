@@ -54,6 +54,7 @@ pipeline "create_user" {
   }
 
   output "create_user" {
-    value = step.http.create_user.response_body
+    value       = step.http.create_user.response_body
+    description = "The created user."
   }
 }

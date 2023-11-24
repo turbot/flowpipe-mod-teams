@@ -1,6 +1,6 @@
 pipeline "get_current_user" {
   title       = "Get Current User"
-  description = "Retrieve the properties and relationships of user object."
+  description = "Retrieve the properties and relationships of current user."
 
   param "access_token" {
     type        = string

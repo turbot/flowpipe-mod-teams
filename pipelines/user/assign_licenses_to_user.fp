@@ -1,6 +1,6 @@
 pipeline "assign_licenses_to_user" {
   title       = "Assign Licenses to User"
-  description = "Assign licenses to a user."
+  description = "Add subscriptions for the user."
 
   param "access_token" {
     type        = string
@@ -38,6 +38,7 @@ pipeline "assign_licenses_to_user" {
   }
 
   output "assigned_licenses" {
-    value = step.http.assign_licenses_to_user.response_body
+    value       = step.http.assign_licenses_to_user.response_body
+    description = "The user details."
   }
 }

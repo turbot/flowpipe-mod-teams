@@ -10,7 +10,7 @@ pipeline "delete_chat_message" {
 
   param "user_id" {
     type        = string
-    description = "The unique identifier for the user."
+    description = local.user_id_param_description
   }
 
   param "chat_id" {

@@ -68,7 +68,7 @@ flowpipe pipeline run list_teams
 To pass values into pipeline [parameters](https://flowpipe.io/docs/using-flowpipe/pipeline-parameters), use the following syntax:
 
 ```sh
-flowpipe pipeline run delete_team --arg team_id=0f8b3036-1111-4f5c-99a8-d2e36c34cf12
+flowpipe pipeline run delete_team --arg team_id="0f8b3036-1111-4f5c-99a8-d2e36c34cf12"
 ```
 
 Multiple pipeline args can be passed in with separate `--arg` flags.

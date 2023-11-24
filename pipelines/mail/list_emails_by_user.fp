@@ -10,7 +10,7 @@ pipeline "list_emails_by_user" {
 
   param "user_id" {
     type        = string
-    description = "The unique identifier for the user."
+    description = local.user_id_param_description
   }
 
   step "http" "list_emails_by_user" {

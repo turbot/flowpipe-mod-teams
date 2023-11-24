@@ -10,4 +10,5 @@ locals {
   chat_id_param_description             = "The unique identifier for the chat."
   teamwork_tag_id_param_description     = "The unique identifier for the tag."
   team_name_param_description           = "The name of the team."
+  user_id_param_description             = "The unique identifier for the user."
 }
