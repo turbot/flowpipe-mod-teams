@@ -1,6 +1,6 @@
-pipeline "get_email" {
-  title       = "Get Email"
-  description = "Retrieve the properties and relationships of an email."
+pipeline "delete_mail" {
+  title       = "Delete Mmail"
+  description = "Delete an email."
 
   param "access_token" {
     type        = string
@@ -15,20 +15,16 @@ pipeline "get_email" {
 
   param "message_id" {
     type        = string
-    description = "The email message ID."
+    description = "The email message ID to delete."
   }
 
-  step "http" "get_email" {
-    method = "get"
+  step "http" "delete_mail" {
+    method = "delete"
     url    = "https://graph.microsoft.com/v1.0/users/${param.user_id}/messages/${param.message_id}"
 
     request_headers = {
       Content-Type  = "application/json"
       Authorization = "Bearer ${param.access_token}"
     }
-  }
-
-  output "get_mail" {
-    value = step.http.get_email.response_body
   }
 }

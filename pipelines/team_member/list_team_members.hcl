@@ -1,6 +1,6 @@
 pipeline "list_team_members" {
   title       = "List Team Members"
-  description = "Get the members of the specific Microsoft Team."
+  description = "Get the conversation member collection of a team."
 
   param "access_token" {
     type        = string
@@ -10,7 +10,8 @@ pipeline "list_team_members" {
 
   param "team_id" {
     type        = string
-    description = "The unique identifier for the team."
+    description = local.team_id_param_description
+    default     = var.team_id
   }
 
   step "http" "list_team_members" {

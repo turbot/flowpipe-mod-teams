@@ -1,5 +1,5 @@
-pipeline "list_emails_by_user" {
-  title       = "List Emails By User"
+pipeline "list_user_mails" {
+  title       = "List User Mails"
   description = "List all messages of a user."
 
   param "access_token" {
@@ -13,7 +13,7 @@ pipeline "list_emails_by_user" {
     description = local.user_id_param_description
   }
 
-  step "http" "list_emails_by_user" {
+  step "http" "list_user_mails" {
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/users/${param.user_id}/messages"
 
@@ -24,7 +24,7 @@ pipeline "list_emails_by_user" {
   }
 
   output "mails" {
-    value       = step.http.list_emails_by_user.response_body
-    description = "List all messages."
+    value       = step.http.list_user_mails.response_body
+    description = "List of all emails."
   }
 }

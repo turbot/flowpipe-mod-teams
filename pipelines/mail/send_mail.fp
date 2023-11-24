@@ -1,4 +1,4 @@
-pipeline "send_email" {
+pipeline "send_mail" {
   title       = "Send Email"
   description = "Send email to recipient(s)."
 
@@ -23,7 +23,7 @@ pipeline "send_email" {
     description = "The email-id(s) of the primary receipient(s)."
   }
 
-  step "http" "send_email" {
+  step "http" "send_mail" {
     method = "post"
     url    = "https://graph.microsoft.com/v1.0/me/sendMail"
 
