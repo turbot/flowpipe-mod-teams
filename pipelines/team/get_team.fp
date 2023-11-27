@@ -1,6 +1,6 @@
-pipeline "list_team_members" {
-  title       = "List Team Members"
-  description = "Get the conversation member collection of a team."
+pipeline "get_team" {
+  title       = "Get Team"
+  description = "Retrieve the properties and relationships of the specified team."
 
   param "access_token" {
     type        = string
@@ -14,17 +14,17 @@ pipeline "list_team_members" {
     default     = var.team_id
   }
 
-  step "http" "list_team_members" {
+  step "http" "get_team" {
     method = "get"
-    url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members"
+    url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}"
 
     request_headers = {
       Authorization = "Bearer ${param.access_token}"
     }
   }
 
-  output "members" {
-    value       = step.http.list_team_members.response_body
-    description = "Team members detail."
+  output "team" {
+    value       = step.http.get_team.response_body
+    description = "Team details."
   }
 }
