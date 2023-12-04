@@ -58,10 +58,10 @@ pipeline "test_create_team" {
     }
   }
 
-  step "pipeline" "delete_team" {
+  step "pipeline" "delete_group" {
     if         = !is_error(step.pipeline.create_team)
     depends_on = [step.pipeline.get_team]
-    pipeline   = pipeline.delete_team
+    pipeline   = pipeline.delete_group
     args = {
       access_token = param.access_token
       team_id      = step.pipeline.create_team.output.team_id
@@ -78,8 +78,8 @@ pipeline "test_create_team" {
     value       = !is_error(step.pipeline.get_team) ? "pass" : "fail: ${step.pipeline.get_team.errors}"
   }
 
-  output "delete_team" {
-    description = "Check for pipeline.delete_team."
-    value       = !is_error(step.pipeline.delete_team) ? "pass" : "fail: ${step.pipeline.delete_team.errors}"
+  output "delete_group" {
+    description = "Check for pipeline.delete_group."
+    value       = !is_error(step.pipeline.delete_group) ? "pass" : "fail: ${step.pipeline.delete_group.errors}"
   }
 }

@@ -24,7 +24,7 @@ pipeline "get_team" {
   }
 
   output "team" {
+    description = "A team object."
     value       = step.http.get_team.response_body
-    description = "Team details."
   }
 }

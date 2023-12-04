@@ -1,6 +1,6 @@
 pipeline "send_mail" {
-  title       = "Send Email"
-  description = "Send email to recipient(s)."
+  title       = "Send Mail"
+  description = "Send a new email using JSON format."
 
   param "access_token" {
     type        = string
@@ -49,5 +49,4 @@ pipeline "send_mail" {
       }
     })
   }
-
 }

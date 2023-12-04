@@ -49,7 +49,7 @@ pipeline "test_update_channel" {
     duration   = "20s"
   }
 
-  // Update the displayName of the channel from "fp-channel-${uuid()}" to "test-update-channel"
+  # Update the displayName of the channel from "fp-channel-${uuid()}" to "test-update-channel"
   step "pipeline" "update_channel" {
     if         = !is_error(step.pipeline.create_channel)
     depends_on = [step.sleep.wait_for_create_complete]

@@ -42,7 +42,7 @@ pipeline "send_chat_message" {
   }
 
   output "message" {
+    description = "A new chat message object."
     value       = step.http.send_chat_message.response_body
-    description = "Chat message details."
   }
 }

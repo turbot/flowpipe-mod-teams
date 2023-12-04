@@ -1,6 +1,6 @@
-pipeline "delete_team" {
-  title       = "Delete Team"
-  description = "Delete a team."
+pipeline "delete_group" {
+  title       = "Delete Group"
+  description = "Delete a group."
 
   param "access_token" {
     type        = string
@@ -8,14 +8,14 @@ pipeline "delete_team" {
     default     = var.access_token
   }
 
-  param "team_id" {
+  param "id" {
     type        = string
-    description = local.team_id_param_description
+    description = "The unique identifier of the group."
   }
 
-  step "http" "delete_team" {
+  step "http" "delete_group" {
     method = "delete"
-    url    = "https://graph.microsoft.com/v1.0/groups/${param.team_id}"
+    url    = "https://graph.microsoft.com/v1.0/groups/${param.id}"
 
     request_headers = {
       Content-Type  = "application/json"

@@ -1,6 +1,6 @@
-pipeline "create_tag" {
-  title       = "Create Teamwork Tag"
-  description = "Create a standard tag for members in a team."
+pipeline "create_teamwork_tag_member" {
+  title       = "Create Teamwork Tag Member"
+  description = "Create a new teamwork tag member object in a team."
 
   param "access_token" {
     type        = string
@@ -14,9 +14,9 @@ pipeline "create_tag" {
     default     = var.team_id
   }
 
-  param "tag_name" {
+  param "teamwork_tag_id" {
     type        = string
-    description = "The name of the tag as it appears to the user in Microsoft Teams."
+    description = local.teamwork_tag_id_param_description
   }
 
   param "user_id" {
@@ -24,9 +24,9 @@ pipeline "create_tag" {
     description = "The unique identifier for the user to add to the tag."
   }
 
-  step "http" "create_tag" {
+  step "http" "create_teamwork_tag_member" {
     method = "post"
-    url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags"
+    url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members"
 
     request_headers = {
       Content-Type  = "application/json"
@@ -34,15 +34,12 @@ pipeline "create_tag" {
     }
 
     request_body = jsonencode({
-      displayName = param.tag_name,
-      members = [{
-        userId = param.user_id,
-      }],
+      userId = param.user_id,
     })
   }
 
-  output "tag" {
-    value       = step.http.create_tag.response_body
-    description = "The created teamwork tag."
+  output "teamwork_tag_member" {
+    description = "A teamwork tag member object."
+    value       = step.http.create_teamwork_tag_member.response_body.value
   }
 }

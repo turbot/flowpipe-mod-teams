@@ -21,7 +21,7 @@ pipeline "add_team_member" {
 
   param "roles" {
     type        = list(string)
-    default     = ["member"] // or "owner" or other applicable roles
+    default     = ["member"] # or "owner" or other applicable roles
     description = "The roles for the user."
   }
 

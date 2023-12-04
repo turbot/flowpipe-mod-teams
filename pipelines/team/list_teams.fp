@@ -18,7 +18,7 @@ pipeline "list_teams" {
   }
 
   output "teams" {
-    value       = step.http.list_teams.response_body
-    description = "Teams details."
+    description = "List of teams."
+    value       = step.http.list_teams.response_body.value
   }
 }

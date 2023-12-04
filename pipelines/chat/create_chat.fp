@@ -61,7 +61,7 @@ pipeline "create_chat" {
   }
 
   output "chat" {
+    description = "The newly created chat resource."
     value       = step.http.create_chat.response_body
-    description = "Chat details."
   }
 }

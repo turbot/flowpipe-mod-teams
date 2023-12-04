@@ -1,4 +1,4 @@
-pipeline "delete_tag_member" {
+pipeline "delete_teamwork_tag_member" {
   title       = "Delete Teamwork Tag Member"
   description = "Delete a member from a standard tag in a team."
 
@@ -24,7 +24,7 @@ pipeline "delete_tag_member" {
     description = "The unique identifier for the member."
   }
 
-  step "http" "delete_tag_member" {
+  step "http" "delete_teamwork_tag_member" {
     method = "delete"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members/${param.teamwork_tag_member_id}"
 

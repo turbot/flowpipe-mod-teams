@@ -1,4 +1,4 @@
-pipeline "delete_tag" {
+pipeline "delete_teamwork_tag" {
   title       = "Delete Teamwork Tag"
   description = "Delete a tag object permanently."
 
@@ -19,7 +19,7 @@ pipeline "delete_tag" {
     description = local.teamwork_tag_id_param_description
   }
 
-  step "http" "delete_tag" {
+  step "http" "delete_teamwork_tag" {
     method = "delete"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 

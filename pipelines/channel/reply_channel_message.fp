@@ -47,7 +47,7 @@ pipeline "reply_channel_message" {
   }
 
   output "message" {
-    value       = step.http.reply_channel_message.response_body
     description = "Channel message details."
+    value       = step.http.reply_channel_message.response_body
   }
 }

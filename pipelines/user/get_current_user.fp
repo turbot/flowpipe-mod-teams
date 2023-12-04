@@ -19,7 +19,7 @@ pipeline "get_current_user" {
   }
 
   output "current_user" {
-    value       = step.http.get_current_user.response_body
     description = "Current User details."
+    value       = step.http.get_current_user.response_body
   }
 }

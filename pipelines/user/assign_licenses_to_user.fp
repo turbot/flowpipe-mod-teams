@@ -11,13 +11,11 @@ pipeline "assign_licenses_to_user" {
   param "user_id" {
     type        = string
     description = "The ID or userPrincipalName of the user to whom you want to assign the license."
-    default     = "test2cis@turbotoffice.onmicrosoft.com"
   }
 
   param "sku_ids" {
     type        = list(string)
     description = "The unique identifier for the available licenses."
-    default     = ["f30db892-07e9-47e9-837c-80727f46fd3d"]
   }
 
   step "http" "assign_licenses_to_user" {
@@ -37,8 +35,8 @@ pipeline "assign_licenses_to_user" {
     })
   }
 
-  output "assigned_licenses" {
-    value       = step.http.assign_licenses_to_user.response_body
+  output "licenses" {
     description = "The user details."
+    value       = step.http.assign_licenses_to_user.response_body
   }
 }

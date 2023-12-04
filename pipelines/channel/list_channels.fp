@@ -25,7 +25,7 @@ pipeline "list_channels" {
   }
 
   output "channels" {
-    value       = step.http.list_channels.response_body
     description = "List of channels."
+    value       = step.http.list_channels.response_body
   }
 }

@@ -1,4 +1,3 @@
-// Usage flowpipe pipeline run get_user_by_email --pipeline-arg user_email="test@test.com"
 pipeline "get_user_by_email" {
   title       = "Get User By Email"
   description = "Retrieve the properties and relationships of user."
@@ -25,7 +24,7 @@ pipeline "get_user_by_email" {
   }
 
   output "user" {
+    description = "The user details."
     value       = step.http.get_user_by_email.response_body
-    description = "User details."
   }
 }

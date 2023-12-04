@@ -15,14 +15,14 @@ pipeline "create_team" {
 
   param "team_description" {
     type        = string
-    optional    = true
     description = "An optional description for the team."
+    optional    = true
   }
 
   param "visibility" {
     type        = string
+    description = "The visibility of the group and team. Defaults to public."
     default     = "public"
-    description = "The visibility of the group and team. Defaults to public"
   }
 
   step "http" "create_team" {
@@ -43,8 +43,8 @@ pipeline "create_team" {
     })
   }
 
-  output "team_id" {
-    value       = try(element(split("'", step.http.create_team.response_headers.Content-Location), 1), "")
-    description = "The unique identifier of the team."
+  output "team" {
+    description = "The new team object."
+    value       = step.http.create_team.response_body
   }
 }

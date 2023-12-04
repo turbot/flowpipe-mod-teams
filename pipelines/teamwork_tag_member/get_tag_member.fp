@@ -1,4 +1,4 @@
-pipeline "get_tag_member" {
+pipeline "get_teamwork_tag_member" {
   title       = "Get Teamwork Tag Member"
   description = "Get the properties and relationships of a member of a standard tag in a team."
 
@@ -23,7 +23,7 @@ pipeline "get_tag_member" {
     description = "The unique identifier for the member."
   }
 
-  step "http" "get_tag_member" {
+  step "http" "get_teamwork_tag_member" {
     method = "get"
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members/${param.teamwork_tag_member_id}"
 
@@ -32,8 +32,8 @@ pipeline "get_tag_member" {
     }
   }
 
-  output "tag_member" {
-    value       = step.http.get_tag_member.response_body
+  output "teamwork_tag_member" {
     description = "A teamwork tag member object."
+    value       = step.http.get_teamwork_tag_member.response_body
   }
 }

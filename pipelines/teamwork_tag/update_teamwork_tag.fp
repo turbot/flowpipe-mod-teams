@@ -1,4 +1,4 @@
-pipeline "update_tag" {
+pipeline "update_teamwork_tag" {
   title       = "Update Teamwork Tag"
   description = "Update the properties of a tag object."
 
@@ -24,7 +24,7 @@ pipeline "update_tag" {
     description = "The name of the tag as it appears to the user in Microsoft Teams."
   }
 
-  step "http" "update_tag" {
+  step "http" "update_teamwork_tag" {
     method = "patch"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 
@@ -38,8 +38,8 @@ pipeline "update_tag" {
     })
   }
 
-  output "tag" {
-    value       = step.http.update_tag.response_body
-    description = "The teamwork tag object."
+  output "teamwork_tag" {
+    description = "The updated teamwork tag object."
+    value       = step.http.update_teamwork_tag.response_body
   }
 }

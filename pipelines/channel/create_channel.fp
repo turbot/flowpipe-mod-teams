@@ -48,7 +48,7 @@ pipeline "create_channel" {
   }
 
   output "channel" {
-    value       = step.http.create_channel.response_body
     description = "The created channel."
+    value       = step.http.create_channel.response_body
   }
 }
