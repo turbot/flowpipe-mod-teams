@@ -21,10 +21,20 @@ pipeline "get_user_by_email" {
       Content-Type  = "application/json"
       Authorization = "Bearer ${param.access_token}"
     }
+
+    error {
+      ignore = true
+    }
   }
 
   output "user" {
     description = "The user details."
     value       = step.http.get_user_by_email.response_body
+  }
+  
+  # Used to handle 404 in sample pipeline
+  output "status_code" {
+    description = "The status code."
+    value       = step.http.get_user_by_email.status_code
   }
 }
