@@ -2,6 +2,10 @@ pipeline "create_channel" {
   title       = "Create Channel"
   description = "Create a new channel in a team."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

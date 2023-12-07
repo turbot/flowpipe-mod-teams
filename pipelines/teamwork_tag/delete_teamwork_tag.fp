@@ -2,6 +2,10 @@ pipeline "delete_teamwork_tag" {
   title       = "Delete Teamwork Tag"
   description = "Delete a tag object permanently."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

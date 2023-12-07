@@ -2,6 +2,10 @@ pipeline "delete_group" {
   title       = "Delete Group"
   description = "Delete a group."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

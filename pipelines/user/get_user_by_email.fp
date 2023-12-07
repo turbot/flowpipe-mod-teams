@@ -2,6 +2,10 @@ pipeline "get_user_by_email" {
   title       = "Get User By Email"
   description = "Retrieve the properties and relationships of user."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

@@ -2,6 +2,10 @@ pipeline "list_users" {
   title       = "List Users"
   description = "Retrieve the list of users."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

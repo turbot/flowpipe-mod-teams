@@ -2,6 +2,10 @@ pipeline "list_channels" {
   title       = "List Channels"
   description = "Retrieve the list of channels in this team."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

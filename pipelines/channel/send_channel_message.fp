@@ -2,6 +2,10 @@ pipeline "send_channel_message" {
   title       = "Send Channel Message"
   description = "Send a new chat message in the specified channel."
 
+  tags = {
+    type = "featured"
+  }
+  
   param "cred" {
     type        = string
     description = local.cred_param_description

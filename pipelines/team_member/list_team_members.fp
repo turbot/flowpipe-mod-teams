@@ -2,6 +2,10 @@ pipeline "list_team_members" {
   title       = "List Team Members"
   description = "Get the conversation member collection of a team."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

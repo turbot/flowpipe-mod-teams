@@ -2,6 +2,10 @@ pipeline "list_chats" {
   title       = "List Chats"
   description = "Retrieve the list of chats that the user is part of."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

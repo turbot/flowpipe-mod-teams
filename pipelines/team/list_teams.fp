@@ -2,6 +2,10 @@ pipeline "list_teams" {
   title       = "List Joined Teams"
   description = "Get the teams in Microsoft Teams that the user is a direct member of."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

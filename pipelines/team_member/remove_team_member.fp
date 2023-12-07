@@ -2,6 +2,10 @@ pipeline "remove_team_member" {
   title       = "Remove Team Member"
   description = "Remove a conversation member from a team."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description

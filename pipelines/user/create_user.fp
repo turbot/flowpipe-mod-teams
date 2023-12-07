@@ -2,6 +2,10 @@ pipeline "create_user" {
   title       = "Create User"
   description = "Create a new user."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description
