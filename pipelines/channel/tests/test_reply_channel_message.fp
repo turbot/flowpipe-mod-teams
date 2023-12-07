@@ -2,6 +2,10 @@ pipeline "test_reply_channel_message" {
   title       = "Test Reply Channel Message"
   description = "Test the reply_channel_message pipeline."
 
+  tags = {
+    type = "test"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description
