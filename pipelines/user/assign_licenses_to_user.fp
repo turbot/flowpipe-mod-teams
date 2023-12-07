@@ -2,10 +2,10 @@ pipeline "assign_licenses_to_user" {
   title       = "Assign Licenses to User"
   description = "Add subscriptions for the user."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "user_id" {
@@ -24,7 +24,7 @@ pipeline "assign_licenses_to_user" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({

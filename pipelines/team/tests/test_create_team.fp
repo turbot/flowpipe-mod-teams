@@ -2,10 +2,10 @@ pipeline "test_create_team" {
   title       = "Test Create Team"
   description = "Test the create_team pipeline."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_name" {
@@ -30,7 +30,7 @@ pipeline "test_create_team" {
   step "pipeline" "create_team" {
     pipeline = pipeline.create_team
     args = {
-      access_token     = param.access_token
+      access_token     = credential.teams[param.cred].access_token
       team_description = param.team_description
       team_name        = param.team_name
       visibility       = param.visibility

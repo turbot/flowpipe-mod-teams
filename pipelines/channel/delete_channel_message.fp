@@ -2,10 +2,10 @@ pipeline "delete_channel_message" {
   title       = "Delete Channel Message"
   description = "Delete a single chat message in a channel."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
@@ -30,7 +30,7 @@ pipeline "delete_channel_message" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
   }
 }

@@ -2,10 +2,10 @@ pipeline "send_chat_message" {
   title       = "Send Chat Message"
   description = "Send a new chat message in the specified chat."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "chat_id" {
@@ -30,7 +30,7 @@ pipeline "send_chat_message" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({

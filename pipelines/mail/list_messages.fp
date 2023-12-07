@@ -2,10 +2,10 @@ pipeline "list_messages" {
   title       = "List Messages"
   description = "Get all the messages in a user's mailbox."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "user_id" {
@@ -19,7 +19,7 @@ pipeline "list_messages" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     loop {
@@ -30,6 +30,6 @@ pipeline "list_messages" {
 
   output "messages" {
     description = "List of all emails."
-    value       = flatten([for entry in step.http.list_messages : entry.response_body.value])
+    value       = flatten([for entry in step.http.list_messages : entry.response_body])
   }
 }

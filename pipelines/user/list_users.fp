@@ -2,10 +2,10 @@ pipeline "list_users" {
   title       = "List Users"
   description = "Retrieve the list of users."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   step "http" "list_users" {
@@ -14,7 +14,7 @@ pipeline "list_users" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     loop {

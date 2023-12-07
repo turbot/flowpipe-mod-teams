@@ -2,10 +2,10 @@ pipeline "send_mail" {
   title       = "Send Mail"
   description = "Send a new email using JSON format."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "subject" {
@@ -29,7 +29,7 @@ pipeline "send_mail" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({

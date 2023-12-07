@@ -2,10 +2,10 @@ pipeline "test_update_channel" {
   title       = "Test Update Channel"
   description = "Test the update_channel pipeline."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
@@ -80,7 +80,7 @@ pipeline "test_update_channel" {
 
     pipeline = pipeline.get_channel
     args = {
-      access_token = param.access_token
+      access_token = credential.teams[param.cred].access_token
       channel_id   = step.pipeline.create_channel.output.channel.id
       team_id      = param.team_id
     }
@@ -96,7 +96,7 @@ pipeline "test_update_channel" {
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
-      access_token = param.access_token
+      access_token = credential.teams[param.cred].access_token
       channel_id   = step.pipeline.create_channel.output.channel.id
       team_id      = var.team_id
     }

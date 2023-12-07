@@ -2,10 +2,10 @@ pipeline "list_channels" {
   title       = "List Channels"
   description = "Retrieve the list of channels in this team."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
@@ -20,7 +20,7 @@ pipeline "list_channels" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
   }
 

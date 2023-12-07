@@ -2,10 +2,10 @@ pipeline "list_teamwork_tag_members" {
   title       = "List Teamwork Tag Members"
   description = "Get a list of the members of a standard tag in a team and their properties."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
@@ -24,7 +24,7 @@ pipeline "list_teamwork_tag_members" {
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members?$top=999"
 
     request_headers = {
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     loop {

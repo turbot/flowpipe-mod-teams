@@ -2,10 +2,10 @@ pipeline "update_team" {
   title       = "Update Team"
   description = "Update the properties of the specified team."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
@@ -47,7 +47,7 @@ pipeline "update_team" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     # If the optional params are not passed then retain the original value from the get_team call, otherwise it passes these fields as null
