@@ -4,7 +4,7 @@ mod "teams" {
   color         = "#4E5FBF"
   documentation = file("./docs/index.md")
   icon          = "/images/flowpipe/mods/turbot/teams.svg"
-  categories    = ["teams", "library"]
+  categories    = ["messaging"]
 
   opengraph {
     title       = "Microsoft Teams Mod for Flowpipe"
