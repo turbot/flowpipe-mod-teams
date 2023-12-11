@@ -2,10 +2,6 @@ pipeline "add_team_member" {
   title       = "Add Team Member"
   description = "Add a new conversation member to a team."
 
-  tags = {
-    type = "featured"
-  }
-
   param "cred" {
     type        = string
     description = local.cred_param_description
