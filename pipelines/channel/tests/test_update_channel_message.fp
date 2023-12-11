@@ -14,7 +14,6 @@ pipeline "test_update_channel_message" {
 
   param "team_id" {
     type        = string
-    default     = var.team_id
     description = "The unique identifier of the team."
   }
 
@@ -102,7 +101,7 @@ pipeline "test_update_channel_message" {
     args = {
       cred       = param.cred
       channel_id = step.pipeline.create_channel.output.channel.id
-      team_id    = var.team_id
+      team_id    = param.team_id
     }
   }
 

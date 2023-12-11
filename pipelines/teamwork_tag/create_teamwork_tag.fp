@@ -11,7 +11,6 @@ pipeline "create_teamwork_tag" {
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   param "tag_name" {

@@ -11,7 +11,6 @@ pipeline "list_teamwork_tags" {
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   step "http" "list_teamwork_tags" {

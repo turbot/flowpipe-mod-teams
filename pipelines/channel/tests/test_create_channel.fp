@@ -15,7 +15,6 @@ pipeline "test_create_channel" {
   param "team_id" {
     type        = string
     description = "The unique identifier of the team."
-    default     = var.team_id
   }
 
   param "channel_name" {
@@ -76,7 +75,7 @@ pipeline "test_create_channel" {
     pipeline   = pipeline.delete_channel
     args = {
       cred       = param.cred
-      team_id    = var.team_id
+      team_id    = param.team_id
       channel_id = step.pipeline.create_channel.output.channel.id
     }
   }

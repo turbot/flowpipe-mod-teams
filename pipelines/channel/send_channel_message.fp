@@ -5,7 +5,7 @@ pipeline "send_channel_message" {
   tags = {
     type = "featured"
   }
-  
+
   param "cred" {
     type        = string
     description = local.cred_param_description
@@ -15,7 +15,6 @@ pipeline "send_channel_message" {
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   param "channel_id" {

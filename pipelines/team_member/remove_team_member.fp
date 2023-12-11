@@ -11,7 +11,6 @@ pipeline "remove_team_member" {
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   param "team_membership_id" {
