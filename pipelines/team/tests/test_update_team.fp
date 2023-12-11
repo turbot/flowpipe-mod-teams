@@ -34,7 +34,7 @@ pipeline "test_update_team" {
   step "pipeline" "create_team" {
     pipeline = pipeline.create_team
     args = {
-      access_token     = credential.teams[param.cred].access_token
+      cred             = param.cred
       team_description = param.team_description
       team_name        = param.team_name
       visibility       = param.visibility
@@ -53,7 +53,7 @@ pipeline "test_update_team" {
     pipeline   = pipeline.update_team
 
     args = {
-      access_token     = credential.teams[param.cred].access_token
+      cred             = param.cred
       team_description = param.team_description
       team_id          = step.pipeline.create_team.output.team_id
       team_name        = param.team_name
@@ -71,8 +71,8 @@ pipeline "test_update_team" {
     depends_on = [step.sleep.wait_for_update_complete]
     pipeline   = pipeline.get_team
     args = {
-      access_token = param.access_token
-      team_id      = step.pipeline.create_team.output.team_id
+      cred    = param.cred
+      team_id = step.pipeline.create_team.output.team_id
     }
 
     # Ignore errors so we can delete
@@ -86,8 +86,8 @@ pipeline "test_update_team" {
     depends_on = [step.pipeline.get_team]
     pipeline   = pipeline.delete_group
     args = {
-      access_token = param.access_token
-      team_id      = step.pipeline.create_team.output.team_id
+      cred    = param.cred
+      team_id = step.pipeline.create_team.output.team_id
     }
   }
 

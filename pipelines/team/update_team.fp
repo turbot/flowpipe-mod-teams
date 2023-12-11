@@ -35,8 +35,8 @@ pipeline "update_team" {
   step "pipeline" "get_team" {
     pipeline = pipeline.get_team
     args = {
-      access_token = param.access_token
-      team_id      = param.team_id
+      cred    = param.cred
+      team_id = param.team_id
     }
   }
 

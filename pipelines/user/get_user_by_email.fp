@@ -1,5 +1,5 @@
 pipeline "get_user_by_email" {
-  title       = "Get User By Email"
+  title       = "Get User by Email"
   description = "Retrieve the properties and relationships of user."
 
   param "cred" {

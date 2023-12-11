@@ -40,7 +40,7 @@ pipeline "test_create_channel" {
   step "pipeline" "create_channel" {
     pipeline = pipeline.create_channel
     args = {
-      access_token        = param.access_token
+      cred                = param.cred
       team_id             = param.team_id
       channel_name        = param.channel_name
       channel_description = param.channel_description
@@ -59,9 +59,9 @@ pipeline "test_create_channel" {
 
     pipeline = pipeline.get_channel
     args = {
-      access_token = credential.teams[param.cred].access_token
-      team_id      = param.team_id
-      channel_id   = step.pipeline.create_channel.output.channel.id
+      cred       = param.cred
+      team_id    = param.team_id
+      channel_id = step.pipeline.create_channel.output.channel.id
     }
 
     # Ignore errors so we can delete
@@ -75,9 +75,9 @@ pipeline "test_create_channel" {
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
-      access_token = credential.teams[param.cred].access_token
-      team_id      = var.team_id
-      channel_id   = step.pipeline.create_channel.output.channel.id
+      cred       = param.cred
+      team_id    = var.team_id
+      channel_id = step.pipeline.create_channel.output.channel.id
     }
   }
 

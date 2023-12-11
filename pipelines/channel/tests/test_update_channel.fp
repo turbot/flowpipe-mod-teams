@@ -5,7 +5,7 @@ pipeline "test_update_channel" {
   tags = {
     type = "test"
   }
-  
+
   param "cred" {
     type        = string
     description = local.cred_param_description
@@ -40,7 +40,7 @@ pipeline "test_update_channel" {
   step "pipeline" "create_channel" {
     pipeline = pipeline.create_channel
     args = {
-      access_token        = param.access_token
+      cred                = param.cred
       channel_description = param.channel_description
       channel_name        = param.channel_name
       membership_type     = param.membership_type
@@ -60,7 +60,7 @@ pipeline "test_update_channel" {
     pipeline   = pipeline.update_channel
 
     args = {
-      access_token        = param.access_token
+      cred                = param.cred
       channel_description = "flowpipe-channel-updated-description"
       channel_id          = step.pipeline.create_channel.output.channel.id
       channel_name        = "flowpipe-update-channel"
@@ -84,9 +84,9 @@ pipeline "test_update_channel" {
 
     pipeline = pipeline.get_channel
     args = {
-      access_token = credential.teams[param.cred].access_token
-      channel_id   = step.pipeline.create_channel.output.channel.id
-      team_id      = param.team_id
+      cred       = param.cred
+      channel_id = step.pipeline.create_channel.output.channel.id
+      team_id    = param.team_id
     }
 
     # Ignore errors so we can delete
@@ -100,9 +100,9 @@ pipeline "test_update_channel" {
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
-      access_token = credential.teams[param.cred].access_token
-      channel_id   = step.pipeline.create_channel.output.channel.id
-      team_id      = var.team_id
+      cred       = param.cred
+      channel_id = step.pipeline.create_channel.output.channel.id
+      team_id    = var.team_id
     }
   }
 

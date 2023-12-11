@@ -28,6 +28,10 @@ pipeline "create_chat" {
 
   step "pipeline" "get_current_user" {
     pipeline = pipeline.get_current_user
+
+    args = {
+      cred = param.cred
+    }
   }
 
   step "http" "create_chat" {

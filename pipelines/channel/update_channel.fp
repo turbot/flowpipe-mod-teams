@@ -38,8 +38,7 @@ pipeline "update_channel" {
 
     request_headers = {
       "Content-Type" = "application/json"
-      //"Authorization" = "Bearer ${param.access_token}"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization  = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode(merge(
