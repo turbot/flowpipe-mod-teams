@@ -2,10 +2,6 @@ pipeline "create_teamwork_tag_member" {
   title       = "Create Teamwork Tag Member"
   description = "Create a new teamwork tag member object in a team."
 
-  tags = {
-    type = "featured"
-  }
-
   param "cred" {
     type        = string
     description = local.cred_param_description

@@ -2,10 +2,6 @@ pipeline "delete_channel" {
   title       = "Delete Channel"
   description = "Delete the channel."
 
-  tags = {
-    type = "featured"
-  }
-  
   param "cred" {
     type        = string
     description = local.cred_param_description

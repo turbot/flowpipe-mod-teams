@@ -2,6 +2,10 @@ pipeline "send_mail" {
   title       = "Send Mail"
   description = "Send a new email using JSON format."
 
+  tags = {
+    type = "featured"
+  }
+
   param "cred" {
     type        = string
     description = local.cred_param_description
