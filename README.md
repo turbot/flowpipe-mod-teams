@@ -8,10 +8,6 @@ Microsoft Teams pipeline library for [Flowpipe](https://flowpipe.io), enabling s
 
 ## Getting Started
 
-### Requirements
-
-Docker daemon must be installed and running. Please see [Install Docker Engine](https://docs.docker.com/engine/install/) for more information.
-
 ### Installation
 
 Download and install Flowpipe (https://flowpipe.io/downloads). Or use Brew:
@@ -19,13 +15,6 @@ Download and install Flowpipe (https://flowpipe.io/downloads). Or use Brew:
 ```sh
 brew tap turbot/tap
 brew install flowpipe
-```
-
-Clone:
-
-```sh
-git clone https://github.com/turbot/flowpipe-mod-teams.git
-cd flowpipe-mod-teams
 ```
 
 ### Credentials
@@ -50,6 +39,53 @@ For more information on credentials in Flowpipe, please see [Managing Credential
 
 ### Usage
 
+[Initialize a mod](https://www.flowpipe.io/docs/mods/index#initializing-a-mod):
+
+```sh
+mkdir my_mod
+cd my_mod
+flowpipe mod init
+```
+
+[Install the Microsoft Teams mod](https://www.flowpipe.io/docs/mods/mod-dependencies#mod-dependencies) as a dependency:
+
+```sh
+flowpipe mod install github.com/turbot/flowpipe-mod-teams
+```
+
+[Use the dependency](https://www.flowpipe.io/docs/mods/write-pipelines/index) in a pipeline step:
+
+```sh
+vi my_pipeline.fp
+```
+
+```hcl
+pipeline "my_pipeline" {
+
+  step "pipeline" "list_team_members" {
+    pipeline = teams.pipeline.list_team_members
+    args = {
+      team_id = "abcdef01-2345-6789"
+    }
+  }
+}
+```
+
+[Run the pipeline](https://www.flowpipe.io/docs/run/pipelines):
+
+```sh
+flowpipe pipeline run my_pipeline
+```
+
+### Developing
+
+Clone:
+
+```sh
+git clone https://github.com/turbot/flowpipe-mod-teams.git
+cd flowpipe-mod-teams
+```
+
 List pipelines:
 
 ```sh
@@ -59,26 +95,14 @@ flowpipe pipeline list
 Run a pipeline:
 
 ```sh
-flowpipe pipeline run list_teams
-```
-
-You can pass in pipeline arguments as well:
-
-```sh
-flowpipe pipeline run list_team_members --arg team_id=a1b2c3d4-78fe-4e1e-p9q8-9d691232xyz9
+flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789
 ```
 
 To use a specific `credential`, specify the `cred` pipeline argument:
 
 ```sh
-flowpipe pipeline run list_teams --arg cred=teams_prod
+flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789 --arg cred=azure_profile
 ```
-
-For more examples on how you can run pipelines, please see [Run Pipelines](https://flowpipe.io/docs/run/pipelines).
-
-### Configuration
-
-No additional configuration is required.
 
 ## Open Source & Contributing
 
