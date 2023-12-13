@@ -2,16 +2,15 @@ pipeline "add_team_member" {
   title       = "Add Team Member"
   description = "Add a new conversation member to a team."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   param "user_id" {
@@ -21,7 +20,7 @@ pipeline "add_team_member" {
 
   param "roles" {
     type        = list(string)
-    default     = ["member"] // or "owner" or other applicable roles
+    default     = ["member"] # or "owner" or other applicable roles
     description = "The roles for the user."
   }
 
@@ -31,7 +30,7 @@ pipeline "add_team_member" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({

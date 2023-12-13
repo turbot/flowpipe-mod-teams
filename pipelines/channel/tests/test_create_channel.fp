@@ -2,16 +2,19 @@ pipeline "test_create_channel" {
   title       = "Test Create Channel"
   description = "Test the create_channel pipeline."
 
-  param "access_token" {
+  tags = {
+    type = "test"
+  }
+
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
     type        = string
     description = "The unique identifier of the team."
-    default     = var.team_id
   }
 
   param "channel_name" {
@@ -36,7 +39,7 @@ pipeline "test_create_channel" {
   step "pipeline" "create_channel" {
     pipeline = pipeline.create_channel
     args = {
-      access_token        = param.access_token
+      cred                = param.cred
       team_id             = param.team_id
       channel_name        = param.channel_name
       channel_description = param.channel_description
@@ -55,9 +58,9 @@ pipeline "test_create_channel" {
 
     pipeline = pipeline.get_channel
     args = {
-      access_token = param.access_token
-      team_id      = param.team_id
-      channel_id   = step.pipeline.create_channel.output.channel.id
+      cred       = param.cred
+      team_id    = param.team_id
+      channel_id = step.pipeline.create_channel.output.channel.id
     }
 
     # Ignore errors so we can delete
@@ -71,9 +74,9 @@ pipeline "test_create_channel" {
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
-      access_token = param.access_token
-      team_id      = var.team_id
-      channel_id   = step.pipeline.create_channel.output.channel.id
+      cred       = param.cred
+      team_id    = param.team_id
+      channel_id = step.pipeline.create_channel.output.channel.id
     }
   }
 

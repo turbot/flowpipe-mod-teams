@@ -1,12 +1,11 @@
-// Usage flowpipe pipeline run get_user_by_email --pipeline-arg user_email="test@test.com"
 pipeline "get_user_by_email" {
-  title       = "Get User By Email"
+  title       = "Get User by Email"
   description = "Retrieve the properties and relationships of user."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "user_email" {
@@ -20,12 +19,22 @@ pipeline "get_user_by_email" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+    }
+
+    error {
+      ignore = true
     }
   }
 
   output "user" {
+    description = "The user details."
     value       = step.http.get_user_by_email.response_body
-    description = "User details."
+  }
+
+  # Used to handle 404 in sample pipeline
+  output "status_code" {
+    description = "The status code."
+    value       = step.http.get_user_by_email.status_code
   }
 }

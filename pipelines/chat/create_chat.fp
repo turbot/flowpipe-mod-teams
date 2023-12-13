@@ -3,10 +3,10 @@ pipeline "create_chat" {
   title       = "Create Chat"
   description = "Create a new one-on-one or group chat."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "chat_type" {
@@ -28,8 +28,9 @@ pipeline "create_chat" {
 
   step "pipeline" "get_current_user" {
     pipeline = pipeline.get_current_user
+
     args = {
-      access_token = param.access_token
+      cred = param.cred
     }
   }
 
@@ -38,8 +39,8 @@ pipeline "create_chat" {
     url    = "https://graph.microsoft.com/v1.0/chats"
 
     request_headers = {
-      "Content-Type"  = "application/json"
-      "Authorization" = "Bearer ${param.access_token}"
+      "Content-Type" = "application/json"
+      Authorization  = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({
@@ -61,7 +62,7 @@ pipeline "create_chat" {
   }
 
   output "chat" {
+    description = "The newly created chat resource."
     value       = step.http.create_chat.response_body
-    description = "Chat details."
   }
 }

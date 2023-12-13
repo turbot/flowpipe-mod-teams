@@ -2,15 +2,18 @@ pipeline "test_send_channel_message" {
   title       = "Test Send Channel Message"
   description = "Test the send_channel_message pipeline."
 
-  param "access_token" {
+  tags = {
+    type = "test"
+  }
+
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
     type        = string
-    default     = var.team_id
     description = "The unique identifier of the team."
   }
 
@@ -42,7 +45,7 @@ pipeline "test_send_channel_message" {
   step "pipeline" "create_channel" {
     pipeline = pipeline.create_channel
     args = {
-      access_token        = param.access_token
+      cred                = param.cred
       channel_description = param.channel_description
       channel_name        = param.channel_name
       membership_type     = param.membership_type
@@ -60,10 +63,10 @@ pipeline "test_send_channel_message" {
     depends_on = [step.sleep.wait_for_create_complete]
     pipeline   = pipeline.send_channel_message
     args = {
-      access_token = param.access_token
-      channel_id   = step.pipeline.create_channel.output.channel.id
-      message      = param.message
-      team_id      = param.team_id
+      cred       = param.cred
+      channel_id = step.pipeline.create_channel.output.channel.id
+      message    = param.message
+      team_id    = param.team_id
     }
 
     # Ignore errors so we can delete channel
@@ -76,10 +79,10 @@ pipeline "test_send_channel_message" {
     if       = !is_error(step.pipeline.send_channel_message)
     pipeline = pipeline.delete_channel_message
     args = {
-      access_token = param.access_token
-      channel_id   = step.pipeline.create_channel.output.channel.id
-      message_id   = step.pipeline.send_channel_message.output.message.id
-      team_id      = param.team_id
+      cred       = param.cred
+      channel_id = step.pipeline.create_channel.output.channel.id
+      message_id = step.pipeline.send_channel_message.output.message.id
+      team_id    = param.team_id
     }
   }
 
@@ -88,9 +91,9 @@ pipeline "test_send_channel_message" {
     depends_on = [step.pipeline.delete_channel_message]
     pipeline   = pipeline.delete_channel
     args = {
-      access_token = param.access_token
-      channel_id   = step.pipeline.create_channel.output.channel.id
-      team_id      = var.team_id
+      cred       = param.cred
+      channel_id = step.pipeline.create_channel.output.channel.id
+      team_id    = param.team_id
     }
   }
 

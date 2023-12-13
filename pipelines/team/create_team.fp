@@ -2,10 +2,14 @@ pipeline "create_team" {
   title       = "Create Team"
   description = "Create a new team."
 
-  param "access_token" {
+  tags = {
+    type = "featured"
+  }
+
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_name" {
@@ -15,14 +19,14 @@ pipeline "create_team" {
 
   param "team_description" {
     type        = string
-    optional    = true
     description = "An optional description for the team."
+    optional    = true
   }
 
   param "visibility" {
     type        = string
+    description = "The visibility of the group and team. Defaults to public."
     default     = "public"
-    description = "The visibility of the group and team. Defaults to public"
   }
 
   step "http" "create_team" {
@@ -31,7 +35,7 @@ pipeline "create_team" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({
@@ -43,8 +47,8 @@ pipeline "create_team" {
     })
   }
 
-  output "team_id" {
-    value       = try(element(split("'", step.http.create_team.response_headers.Content-Location), 1), "")
-    description = "The unique identifier of the team."
+  output "team" {
+    description = "The new team object."
+    value       = step.http.create_team.response_body
   }
 }

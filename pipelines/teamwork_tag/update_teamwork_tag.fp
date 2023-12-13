@@ -1,17 +1,16 @@
-pipeline "update_tag" {
+pipeline "update_teamwork_tag" {
   title       = "Update Teamwork Tag"
   description = "Update the properties of a tag object."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   param "teamwork_tag_id" {
@@ -24,13 +23,13 @@ pipeline "update_tag" {
     description = "The name of the tag as it appears to the user in Microsoft Teams."
   }
 
-  step "http" "update_tag" {
+  step "http" "update_teamwork_tag" {
     method = "patch"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}"
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({
@@ -38,8 +37,8 @@ pipeline "update_tag" {
     })
   }
 
-  output "tag" {
-    value       = step.http.update_tag.response_body
-    description = "The teamwork tag object."
+  output "teamwork_tag" {
+    description = "The updated teamwork tag object."
+    value       = step.http.update_teamwork_tag.response_body
   }
 }

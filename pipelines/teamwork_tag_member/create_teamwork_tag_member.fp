@@ -1,17 +1,16 @@
-pipeline "add_tag_member" {
-  title       = "Add Teamwork Tag Member"
+pipeline "create_teamwork_tag_member" {
+  title       = "Create Teamwork Tag Member"
   description = "Create a new teamwork tag member object in a team."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   param "teamwork_tag_id" {
@@ -24,13 +23,13 @@ pipeline "add_tag_member" {
     description = "The unique identifier for the user to add to the tag."
   }
 
-  step "http" "add_tag_member" {
+  step "http" "create_teamwork_tag_member" {
     method = "post"
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members"
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({
@@ -38,8 +37,8 @@ pipeline "add_tag_member" {
     })
   }
 
-  output "tag_member" {
-    value       = step.http.add_tag_member.response_body
+  output "teamwork_tag_member" {
     description = "A teamwork tag member object."
+    value       = step.http.create_teamwork_tag_member.response_body.value
   }
 }

@@ -2,16 +2,15 @@ pipeline "create_channel" {
   title       = "Create Channel"
   description = "Create a new channel in a team."
 
-  param "access_token" {
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_id" {
     type        = string
     description = local.team_id_param_description
-    default     = var.team_id
   }
 
   param "channel_name" {
@@ -37,7 +36,7 @@ pipeline "create_channel" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${param.access_token}"
+      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
     }
 
     request_body = jsonencode({
@@ -48,7 +47,7 @@ pipeline "create_channel" {
   }
 
   output "channel" {
-    value       = step.http.create_channel.response_body
     description = "The created channel."
+    value       = step.http.create_channel.response_body
   }
 }

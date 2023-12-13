@@ -2,10 +2,14 @@ pipeline "test_send_chat_message" {
   title       = "Test Send Chat Message"
   description = "Test the send_chat_message pipeline."
 
-  param "access_token" {
+  tags = {
+    type = "test"
+  }
+
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "message" {
@@ -23,16 +27,16 @@ pipeline "test_send_chat_message" {
   step "pipeline" "get_current_user" {
     pipeline = pipeline.get_current_user
     args = {
-      access_token = param.access_token
+      cred = param.cred
     }
   }
 
   step "pipeline" "create_chat" {
     pipeline = pipeline.create_chat
     args = {
-      access_token = param.access_token
-      chat_type    = "group"
-      topic        = "flowpipe-mod-test"
+      cred      = param.cred
+      chat_type = "group"
+      topic     = "flowpipe-mod-test"
     }
   }
 
@@ -40,9 +44,9 @@ pipeline "test_send_chat_message" {
     if       = !is_error(step.pipeline.create_chat)
     pipeline = pipeline.send_chat_message
     args = {
-      access_token = param.access_token
-      chat_id      = step.pipeline.create_chat.output.chat.id
-      message      = param.message
+      cred    = param.cred
+      chat_id = step.pipeline.create_chat.output.chat.id
+      message = param.message
     }
   }
 
@@ -56,10 +60,10 @@ pipeline "test_send_chat_message" {
     depends_on = [step.sleep.wait_for_send_chat_message]
     pipeline   = pipeline.delete_chat_message
     args = {
-      access_token = param.access_token
-      chat_id      = step.pipeline.create_chat.output.chat.id
-      message_id   = step.pipeline.send_chat_message.output.message.id
-      user_id      = step.pipeline.get_current_user.output.current_user.id
+      cred       = param.cred
+      chat_id    = step.pipeline.create_chat.output.chat.id
+      message_id = step.pipeline.send_chat_message.output.message.id
+      user_id    = step.pipeline.get_current_user.output.current_user.id
     }
   }
 

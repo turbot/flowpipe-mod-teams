@@ -2,10 +2,14 @@ pipeline "test_update_team" {
   title       = "Test Update Team"
   description = "Test the update_team pipeline."
 
-  param "access_token" {
+  tags = {
+    type = "test"
+  }
+
+  param "cred" {
     type        = string
-    description = local.access_token_param_description
-    default     = var.access_token
+    description = local.cred_param_description
+    default     = "default"
   }
 
   param "team_name" {
@@ -30,7 +34,7 @@ pipeline "test_update_team" {
   step "pipeline" "create_team" {
     pipeline = pipeline.create_team
     args = {
-      access_token     = param.access_token
+      cred             = param.cred
       team_description = param.team_description
       team_name        = param.team_name
       visibility       = param.visibility
@@ -42,14 +46,14 @@ pipeline "test_update_team" {
     duration   = "10s"
   }
 
-  // Updating the visibility from private to public
+  # Updating the visibility from private to public
   step "pipeline" "update_team" {
     if         = !is_error(step.pipeline.create_team)
     depends_on = [step.sleep.wait_for_create_complete]
     pipeline   = pipeline.update_team
 
     args = {
-      access_token     = param.access_token
+      cred             = param.cred
       team_description = param.team_description
       team_id          = step.pipeline.create_team.output.team_id
       team_name        = param.team_name
@@ -67,8 +71,8 @@ pipeline "test_update_team" {
     depends_on = [step.sleep.wait_for_update_complete]
     pipeline   = pipeline.get_team
     args = {
-      access_token = param.access_token
-      team_id      = step.pipeline.create_team.output.team_id
+      cred    = param.cred
+      team_id = step.pipeline.create_team.output.team_id
     }
 
     # Ignore errors so we can delete
@@ -77,13 +81,13 @@ pipeline "test_update_team" {
     }
   }
 
-  step "pipeline" "delete_team" {
+  step "pipeline" "delete_group" {
     if         = !is_error(step.pipeline.create_team)
     depends_on = [step.pipeline.get_team]
-    pipeline   = pipeline.delete_team
+    pipeline   = pipeline.delete_group
     args = {
-      access_token = param.access_token
-      team_id      = step.pipeline.create_team.output.team_id
+      cred    = param.cred
+      team_id = step.pipeline.create_team.output.team_id
     }
   }
 
@@ -102,8 +106,8 @@ pipeline "test_update_team" {
     value       = !is_error(step.pipeline.get_team) ? "pass" : "fail: ${step.pipeline.get_team.errors}"
   }
 
-  output "delete_team" {
-    description = "Check for pipeline.delete_team."
-    value       = !is_error(step.pipeline.delete_team) ? "pass" : "fail: ${step.pipeline.delete_team.errors}"
+  output "delete_group" {
+    description = "Check for pipeline.delete_group."
+    value       = !is_error(step.pipeline.delete_group) ? "pass" : "fail: ${step.pipeline.delete_group.errors}"
   }
 }
