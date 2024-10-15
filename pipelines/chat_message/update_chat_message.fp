@@ -3,9 +3,9 @@ pipeline "update_chat_message" {
   description = "Update a chat message."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "chat_id" {

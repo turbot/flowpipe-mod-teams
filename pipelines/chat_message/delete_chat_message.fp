@@ -3,9 +3,9 @@ pipeline "delete_chat_message" {
   description = "Delete a single chat message in a chat."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "user_id" {

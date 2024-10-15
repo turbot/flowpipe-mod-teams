@@ -3,9 +3,9 @@ pipeline "get_current_user" {
   description = "Retrieve the properties and relationships of current user."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   step "http" "get_current_user" {

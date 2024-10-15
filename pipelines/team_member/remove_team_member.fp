@@ -3,9 +3,9 @@ pipeline "remove_team_member" {
   description = "Remove a conversation member from a team."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "team_id" {

@@ -3,9 +3,9 @@ pipeline "get_teamwork_tag_member" {
   description = "Get the properties and relationships of a member of a standard tag in a team."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "team_id" {

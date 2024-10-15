@@ -3,9 +3,9 @@ pipeline "delete_teamwork_tag_member" {
   description = "Delete a member from a standard tag in a team."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "team_id" {

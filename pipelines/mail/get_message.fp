@@ -3,9 +3,9 @@ pipeline "get_message" {
   description = "Retrieve the properties and relationships of a message object."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "user_id" {

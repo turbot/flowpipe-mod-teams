@@ -3,9 +3,9 @@ pipeline "list_messages" {
   description = "Get all the messages in a user's mailbox."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "user_id" {

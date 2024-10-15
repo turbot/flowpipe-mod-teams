@@ -3,9 +3,9 @@ pipeline "list_team_members" {
   description = "Get the conversation member collection of a team."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "team_id" {

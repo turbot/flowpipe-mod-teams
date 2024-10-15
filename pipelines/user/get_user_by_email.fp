@@ -3,9 +3,9 @@ pipeline "get_user_by_email" {
   description = "Retrieve the properties and relationships of user."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   param "user_email" {

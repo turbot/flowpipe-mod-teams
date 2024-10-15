@@ -101,7 +101,7 @@ flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789
 To use a specific `connection`, specify the `conn` pipeline argument:
 
 ```sh
-flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789 --arg conn=connection.microsoft_teams.teams_profile
+flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789 --arg conn=connection.teams.teams_profile
 ```
 
 ## Open Source & Contributing

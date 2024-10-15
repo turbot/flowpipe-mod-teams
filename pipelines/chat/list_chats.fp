@@ -3,9 +3,9 @@ pipeline "list_chats" {
   description = "Retrieve the list of chats that the user is part of."
 
   param "conn" {
-    type        = connection.microsoft_teams
+    type        = connection.teams
     description = local.conn_param_description
-    default     = connection.microsoft_teams.default
+    default     = connection.teams.default
   }
 
   step "http" "list_chats" {
