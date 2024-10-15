@@ -5,7 +5,7 @@ locals {
   channel_name_param_description        = "Channel name as it will appear to the user in Microsoft Teams."
   chat_id_param_description             = "The unique identifier for the chat."
   chat_topic_param_description          = "Subject or topic for the chat. Only available for group chats."
-  cred_param_description                = "Name for credentials to use. If not provided, the default credentials will be used."
+  conn_param_description                = "Name of Teams connection to use. If not provided, the default Teams connection will be used."
   message_id_param_description          = "Unique identifier for the message."
   team_id_param_description             = "The unique identifier of the team."
   team_name_param_description           = "The name of the team."

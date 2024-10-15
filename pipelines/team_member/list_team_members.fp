@@ -2,10 +2,10 @@ pipeline "list_team_members" {
   title       = "List Team Members"
   description = "Get the conversation member collection of a team."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   param "team_id" {
@@ -18,7 +18,7 @@ pipeline "list_team_members" {
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members?$top=999"
 
     request_headers = {
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     loop {

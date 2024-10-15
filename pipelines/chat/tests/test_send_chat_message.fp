@@ -6,10 +6,10 @@ pipeline "test_send_chat_message" {
     type = "test"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   param "message" {
@@ -27,14 +27,14 @@ pipeline "test_send_chat_message" {
   step "pipeline" "get_current_user" {
     pipeline = pipeline.get_current_user
     args = {
-      cred = param.cred
+      conn = param.conn
     }
   }
 
   step "pipeline" "create_chat" {
     pipeline = pipeline.create_chat
     args = {
-      cred      = param.cred
+      conn      = param.conn
       chat_type = "group"
       topic     = "flowpipe-mod-test"
     }
@@ -44,7 +44,7 @@ pipeline "test_send_chat_message" {
     if       = !is_error(step.pipeline.create_chat)
     pipeline = pipeline.send_chat_message
     args = {
-      cred    = param.cred
+      conn    = param.conn
       chat_id = step.pipeline.create_chat.output.chat.id
       message = param.message
     }
@@ -60,7 +60,7 @@ pipeline "test_send_chat_message" {
     depends_on = [step.sleep.wait_for_send_chat_message]
     pipeline   = pipeline.delete_chat_message
     args = {
-      cred       = param.cred
+      conn       = param.conn
       chat_id    = step.pipeline.create_chat.output.chat.id
       message_id = step.pipeline.send_chat_message.output.message.id
       user_id    = step.pipeline.get_current_user.output.current_user.id

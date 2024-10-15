@@ -2,10 +2,10 @@ pipeline "update_channel_message" {
   title       = "Update Channel Message"
   description = "Update a chat message in a channel."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   param "team_id" {
@@ -34,7 +34,7 @@ pipeline "update_channel_message" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({

@@ -2,10 +2,10 @@ pipeline "delete_group" {
   title       = "Delete Group"
   description = "Delete a group."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   param "id" {
@@ -20,7 +20,7 @@ pipeline "delete_group" {
     request_headers = {
       Content-Type  = "application/json"
       cache-control = "no-cache"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
   }
 }

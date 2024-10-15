@@ -6,10 +6,10 @@ pipeline "test_update_team" {
     type = "test"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   param "team_name" {
@@ -34,7 +34,7 @@ pipeline "test_update_team" {
   step "pipeline" "create_team" {
     pipeline = pipeline.create_team
     args = {
-      cred             = param.cred
+      conn             = param.conn
       team_description = param.team_description
       team_name        = param.team_name
       visibility       = param.visibility
@@ -53,7 +53,7 @@ pipeline "test_update_team" {
     pipeline   = pipeline.update_team
 
     args = {
-      cred             = param.cred
+      conn             = param.conn
       team_description = param.team_description
       team_id          = step.pipeline.create_team.output.team_id
       team_name        = param.team_name
@@ -71,7 +71,7 @@ pipeline "test_update_team" {
     depends_on = [step.sleep.wait_for_update_complete]
     pipeline   = pipeline.get_team
     args = {
-      cred    = param.cred
+      conn    = param.conn
       team_id = step.pipeline.create_team.output.team_id
     }
 
@@ -86,7 +86,7 @@ pipeline "test_update_team" {
     depends_on = [step.pipeline.get_team]
     pipeline   = pipeline.delete_group
     args = {
-      cred    = param.cred
+      conn    = param.conn
       team_id = step.pipeline.create_team.output.team_id
     }
   }

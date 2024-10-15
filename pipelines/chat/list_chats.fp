@@ -2,10 +2,10 @@ pipeline "list_chats" {
   title       = "List Chats"
   description = "Retrieve the list of chats that the user is part of."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   step "http" "list_chats" {
@@ -14,7 +14,7 @@ pipeline "list_chats" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     loop {

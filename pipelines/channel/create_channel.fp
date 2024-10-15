@@ -2,10 +2,10 @@ pipeline "create_channel" {
   title       = "Create Channel"
   description = "Create a new channel in a team."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   param "team_id" {
@@ -36,7 +36,7 @@ pipeline "create_channel" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({

@@ -2,10 +2,10 @@ pipeline "create_user" {
   title       = "Create User"
   description = "Create a new user."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.microsoft_teams
+    description = local.conn_param_description
+    default     = connection.microsoft_teams.default
   }
 
   param "display_name" {
@@ -39,7 +39,7 @@ pipeline "create_user" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({
