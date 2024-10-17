@@ -25,7 +25,6 @@ pipeline "send_chat_message" {
   param "message_content_type" {
     type        = string
     description = "The type of the content. Possible values are text and html."
-    default     = "text"
   }
 
   step "http" "send_chat_message" {
