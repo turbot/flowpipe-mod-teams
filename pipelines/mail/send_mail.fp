@@ -3,7 +3,7 @@ pipeline "send_mail" {
   description = "Send a new email using JSON format."
 
   tags = {
-    type = "featured"
+    recommended = "true"
   }
 
   param "conn" {

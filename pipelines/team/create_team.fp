@@ -3,7 +3,7 @@ pipeline "create_team" {
   description = "Create a new team."
 
   tags = {
-    type = "featured"
+    recommended = "true"
   }
 
   param "conn" {

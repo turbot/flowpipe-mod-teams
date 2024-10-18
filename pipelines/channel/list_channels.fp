@@ -3,7 +3,7 @@ pipeline "list_channels" {
   description = "Retrieve the list of channels in this team."
 
   tags = {
-    type = "featured"
+    recommended = "true"
   }
 
   param "conn" {

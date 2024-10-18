@@ -3,7 +3,7 @@ pipeline "send_chat_message" {
   description = "Send a new chat message in the specified chat."
 
   tags = {
-    type = "featured"
+    recommended = "true"
   }
 
   param "conn" {
