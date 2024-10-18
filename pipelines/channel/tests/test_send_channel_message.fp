@@ -3,7 +3,7 @@ pipeline "test_send_channel_message" {
   description = "Test the send_channel_message pipeline."
 
   tags = {
-    type = "test"
+    folder = "Tests"
   }
 
   param "conn" {
