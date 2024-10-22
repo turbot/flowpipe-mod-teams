@@ -11,4 +11,10 @@ mod "teams" {
     description = "Run pipelines to supercharge your Mircosoft Teams workflows using Flowpipe."
     image       = "/images/mods/turbot/teams-social-graphic.png"
   }
+
+  require {
+    flowpipe {
+      min_version = "1.0.0"
+    }
+  }
 }
