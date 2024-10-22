@@ -2,10 +2,10 @@ pipeline "update_chat_message" {
   title       = "Update Chat Message"
   description = "Update a chat message."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "chat_id" {
@@ -29,7 +29,7 @@ pipeline "update_chat_message" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({

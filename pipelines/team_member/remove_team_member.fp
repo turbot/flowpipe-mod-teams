@@ -2,10 +2,10 @@ pipeline "remove_team_member" {
   title       = "Remove Team Member"
   description = "Remove a conversation member from a team."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -23,7 +23,7 @@ pipeline "remove_team_member" {
     url    = "https://graph.microsoft.com/v1.0/teams/${param.team_id}/members/${param.team_membership_id}"
 
     request_headers = {
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
   }
 }

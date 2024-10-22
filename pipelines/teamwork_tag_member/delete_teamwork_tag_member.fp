@@ -2,10 +2,10 @@ pipeline "delete_teamwork_tag_member" {
   title       = "Delete Teamwork Tag Member"
   description = "Delete a member from a standard tag in a team."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -28,7 +28,7 @@ pipeline "delete_teamwork_tag_member" {
     url    = "https://graph.microsoft.com/beta/teams/${param.team_id}/tags/${param.teamwork_tag_id}/members/${param.teamwork_tag_member_id}"
 
     request_headers = {
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
   }
 }

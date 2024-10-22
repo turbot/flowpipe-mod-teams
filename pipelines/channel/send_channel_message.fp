@@ -3,13 +3,13 @@ pipeline "send_channel_message" {
   description = "Send a new chat message in the specified channel."
 
   tags = {
-    type = "featured"
+    recommended = "true"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -39,7 +39,7 @@ pipeline "send_channel_message" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({

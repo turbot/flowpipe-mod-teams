@@ -3,10 +3,10 @@ pipeline "create_chat" {
   title       = "Create Chat"
   description = "Create a new one-on-one or group chat."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "chat_type" {
@@ -30,7 +30,7 @@ pipeline "create_chat" {
     pipeline = pipeline.get_current_user
 
     args = {
-      cred = param.cred
+      conn = param.conn
     }
   }
 
@@ -40,7 +40,7 @@ pipeline "create_chat" {
 
     request_headers = {
       "Content-Type" = "application/json"
-      Authorization  = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization  = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({

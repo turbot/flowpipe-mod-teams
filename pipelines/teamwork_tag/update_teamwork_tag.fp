@@ -2,10 +2,10 @@ pipeline "update_teamwork_tag" {
   title       = "Update Teamwork Tag"
   description = "Update the properties of a tag object."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -29,7 +29,7 @@ pipeline "update_teamwork_tag" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({

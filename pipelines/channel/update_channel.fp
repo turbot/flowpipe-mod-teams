@@ -2,10 +2,10 @@ pipeline "update_channel" {
   title       = "Update Channel"
   description = "Update the properties of the specified channel."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -37,7 +37,7 @@ pipeline "update_channel" {
 
     request_headers = {
       "Content-Type" = "application/json"
-      Authorization  = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization  = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode(merge(

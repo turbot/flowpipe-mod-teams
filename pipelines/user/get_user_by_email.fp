@@ -2,10 +2,10 @@ pipeline "get_user_by_email" {
   title       = "Get User by Email"
   description = "Retrieve the properties and relationships of user."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "user_email" {
@@ -19,7 +19,7 @@ pipeline "get_user_by_email" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     error {

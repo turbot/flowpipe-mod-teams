@@ -2,10 +2,10 @@ pipeline "list_messages" {
   title       = "List Messages"
   description = "Get all the messages in a user's mailbox."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "user_id" {
@@ -19,7 +19,7 @@ pipeline "list_messages" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     loop {

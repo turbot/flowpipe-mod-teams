@@ -2,10 +2,10 @@ pipeline "update_team" {
   title       = "Update Team"
   description = "Update the properties of the specified team."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -34,7 +34,7 @@ pipeline "update_team" {
   step "pipeline" "get_team" {
     pipeline = pipeline.get_team
     args = {
-      cred    = param.cred
+      conn    = param.conn
       team_id = param.team_id
     }
   }
@@ -46,7 +46,7 @@ pipeline "update_team" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     # If the optional params are not passed then retain the original value from the get_team call, otherwise it passes these fields as null

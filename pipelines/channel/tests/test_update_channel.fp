@@ -3,13 +3,13 @@ pipeline "test_update_channel" {
   description = "Test the update_channel pipeline."
 
   tags = {
-    type = "test"
+    folder = "Tests"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -39,7 +39,7 @@ pipeline "test_update_channel" {
   step "pipeline" "create_channel" {
     pipeline = pipeline.create_channel
     args = {
-      cred                = param.cred
+      conn                = param.conn
       channel_description = param.channel_description
       channel_name        = param.channel_name
       membership_type     = param.membership_type
@@ -59,7 +59,7 @@ pipeline "test_update_channel" {
     pipeline   = pipeline.update_channel
 
     args = {
-      cred                = param.cred
+      conn                = param.conn
       channel_description = "flowpipe-channel-updated-description"
       channel_id          = step.pipeline.create_channel.output.channel.id
       channel_name        = "flowpipe-update-channel"
@@ -83,7 +83,7 @@ pipeline "test_update_channel" {
 
     pipeline = pipeline.get_channel
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       team_id    = param.team_id
     }
@@ -99,7 +99,7 @@ pipeline "test_update_channel" {
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       team_id    = param.team_id
     }

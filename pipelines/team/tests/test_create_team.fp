@@ -3,13 +3,13 @@ pipeline "test_create_team" {
   description = "Test the create_team pipeline."
 
   tags = {
-    type = "test"
+    folder = "Tests"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_name" {
@@ -34,7 +34,7 @@ pipeline "test_create_team" {
   step "pipeline" "create_team" {
     pipeline = pipeline.create_team
     args = {
-      cred             = param.cred
+      conn             = param.conn
       team_description = param.team_description
       team_name        = param.team_name
       visibility       = param.visibility
@@ -52,7 +52,7 @@ pipeline "test_create_team" {
 
     pipeline = pipeline.get_team
     args = {
-      cred    = param.cred
+      conn    = param.conn
       team_id = step.pipeline.create_team.output.team_id
     }
 
@@ -67,7 +67,7 @@ pipeline "test_create_team" {
     depends_on = [step.pipeline.get_team]
     pipeline   = pipeline.delete_group
     args = {
-      cred    = param.cred
+      conn    = param.conn
       team_id = step.pipeline.create_team.output.team_id
     }
   }

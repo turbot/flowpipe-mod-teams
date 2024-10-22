@@ -2,10 +2,10 @@ pipeline "get_current_user" {
   title       = "Get Current User"
   description = "Retrieve the properties and relationships of current user."
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   step "http" "get_current_user" {
@@ -14,7 +14,7 @@ pipeline "get_current_user" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
   }
 

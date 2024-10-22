@@ -3,13 +3,13 @@ pipeline "test_create_channel" {
   description = "Test the create_channel pipeline."
 
   tags = {
-    type = "test"
+    folder = "Tests"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -39,7 +39,7 @@ pipeline "test_create_channel" {
   step "pipeline" "create_channel" {
     pipeline = pipeline.create_channel
     args = {
-      cred                = param.cred
+      conn                = param.conn
       team_id             = param.team_id
       channel_name        = param.channel_name
       channel_description = param.channel_description
@@ -58,7 +58,7 @@ pipeline "test_create_channel" {
 
     pipeline = pipeline.get_channel
     args = {
-      cred       = param.cred
+      conn       = param.conn
       team_id    = param.team_id
       channel_id = step.pipeline.create_channel.output.channel.id
     }
@@ -74,7 +74,7 @@ pipeline "test_create_channel" {
     depends_on = [step.pipeline.get_channel]
     pipeline   = pipeline.delete_channel
     args = {
-      cred       = param.cred
+      conn       = param.conn
       team_id    = param.team_id
       channel_id = step.pipeline.create_channel.output.channel.id
     }

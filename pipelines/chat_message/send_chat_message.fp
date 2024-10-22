@@ -3,13 +3,13 @@ pipeline "send_chat_message" {
   description = "Send a new chat message in the specified chat."
 
   tags = {
-    type = "featured"
+    recommended = "true"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "chat_id" {
@@ -25,7 +25,6 @@ pipeline "send_chat_message" {
   param "message_content_type" {
     type        = string
     description = "The type of the content. Possible values are text and html."
-    default     = "text"
   }
 
   step "http" "send_chat_message" {
@@ -34,7 +33,7 @@ pipeline "send_chat_message" {
 
     request_headers = {
       Content-Type  = "application/json"
-      Authorization = "Bearer ${credential.teams[param.cred].access_token}"
+      Authorization = "Bearer ${param.conn.access_token}"
     }
 
     request_body = jsonencode({

@@ -17,25 +17,25 @@ brew tap turbot/tap
 brew install flowpipe
 ```
 
-### Credentials
+### Connections
 
 By default, the following environment variables will be used for authentication:
 
 - `TEAMS_ACCESS_TOKEN`
 
-You can also create `credential` resources in configuration files:
+You can also create `connection` resources in configuration files:
 
 ```sh
 vi ~/.flowpipe/config/teams.fpc
 ```
 
 ```hcl
-credential "teams" "default" {
+connection "microsoft_teams" "default" {
   access_token = "<access_token>"
 }
 ```
 
-For more information on credentials in Flowpipe, please see [Managing Credentials](https://flowpipe.io/docs/run/credentials).
+For more information on connections in Flowpipe, please see [Managing Connections](https://flowpipe.io/docs/run/connections).
 
 ### Usage
 
@@ -98,10 +98,10 @@ Run a pipeline:
 flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789
 ```
 
-To use a specific `credential`, specify the `cred` pipeline argument:
+To use a specific `connection`, specify the `conn` pipeline argument:
 
 ```sh
-flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789 --arg cred=azure_profile
+flowpipe pipeline run list_team_members --arg team_id=abcdef01-2345-6789 --arg conn=connection.teams.teams_profile
 ```
 
 ## Open Source & Contributing

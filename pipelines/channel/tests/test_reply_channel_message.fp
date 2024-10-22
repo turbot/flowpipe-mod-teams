@@ -3,13 +3,13 @@ pipeline "test_reply_channel_message" {
   description = "Test the reply_channel_message pipeline."
 
   tags = {
-    type = "test"
+    folder = "Tests"
   }
 
-  param "cred" {
-    type        = string
-    description = local.cred_param_description
-    default     = "default"
+  param "conn" {
+    type        = connection.teams
+    description = local.conn_param_description
+    default     = connection.teams.default
   }
 
   param "team_id" {
@@ -45,7 +45,7 @@ pipeline "test_reply_channel_message" {
   step "pipeline" "create_channel" {
     pipeline = pipeline.create_channel
     args = {
-      cred                = param.cred
+      conn                = param.conn
       channel_name        = param.channel_name
       channel_description = param.channel_description
       membership_type     = param.membership_type
@@ -63,7 +63,7 @@ pipeline "test_reply_channel_message" {
     depends_on = [step.sleep.wait_for_create_complete]
     pipeline   = pipeline.send_channel_message
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       message    = param.message
       team_id    = param.team_id
@@ -74,7 +74,7 @@ pipeline "test_reply_channel_message" {
     if       = !is_error(step.pipeline.send_channel_message)
     pipeline = pipeline.reply_channel_message
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       message    = param.message
       message_id = step.pipeline.send_channel_message.output.message.id
@@ -86,7 +86,7 @@ pipeline "test_reply_channel_message" {
     if       = !is_error(step.pipeline.send_channel_message)
     pipeline = pipeline.update_channel_message
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       message    = param.message
       message_id = step.pipeline.send_channel_message.output.message.id
@@ -104,7 +104,7 @@ pipeline "test_reply_channel_message" {
     depends_on = [step.pipeline.update_channel_message]
     pipeline   = pipeline.delete_channel_message
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       message_id = step.pipeline.reply_channel_message.output.message.id
       team_id    = param.team_id
@@ -116,7 +116,7 @@ pipeline "test_reply_channel_message" {
     depends_on = [step.pipeline.delete_reply_channel_message]
     pipeline   = pipeline.delete_channel_message
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       message_id = step.pipeline.send_channel_message.output.message.id
       team_id    = param.team_id
@@ -128,7 +128,7 @@ pipeline "test_reply_channel_message" {
     depends_on = [step.pipeline.delete_channel_message]
     pipeline   = pipeline.delete_channel
     args = {
-      cred       = param.cred
+      conn       = param.conn
       channel_id = step.pipeline.create_channel.output.channel.id
       team_id    = param.team_id
     }
